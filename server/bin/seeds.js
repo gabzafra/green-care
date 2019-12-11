@@ -12,6 +12,48 @@ const bcryptSalt = 10;
 
 require("../configs/db.config");
 
+function getFakeCoordsArr() {
+  return [randomFloat(40, 40.00005), randomFloat(-3.5, -3.50005)];
+}
+
+function calcDistance(lat1, lng1, lat2, lng2) {
+  const R = 6371; // earth radius in km
+  let dLat = toRad(lat2 - lat1);
+  let dLng = toRad(lng2 - lng1);
+  lat1 = toRad(lat1);
+  lat2 = toRad(lat2);
+
+  let a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLng / 2) * Math.sin(dLng / 2) * Math.cos(lat1) * Math.cos(lat2);
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  let d = R * c;
+  return d;
+}
+
+function toRad(value) {
+  return (value * Math.PI) / 180;
+}
+
+function getUserLocationArr(locations, radius) {
+  let resultArr = [];
+  if (locations.length > 0) {
+    let currentLoc = locations.pop();
+    resultArr.push(currentLoc);
+    while (locations.length > 0) {
+      let nextLoc = locations.pop();
+      if (
+        calcDistance(currentLoc[0], currentLoc[1], nextLoc[0], nextLoc[1]) >
+        radius
+      ) {
+        resultArr.push(nextLoc);
+        currentLoc = nextLoc;
+      }
+    }
+  }
+  return resultArr;
+}
+
 let flip = true;
 let tasks = Array(12)
   .fill()
@@ -24,6 +66,7 @@ let tasks = Array(12)
     };
   });
 let taskArr = [];
+let plantRefArr = [];
 
 let plantArr = [
   {
@@ -41,7 +84,7 @@ let plantArr = [
     perennial: true,
     location: {
       type: "Point",
-      coordinates: [randomFloat(40, 40.5), randomFloat(-3, 5, -4)]
+      coordinates: getFakeCoordsArr()
     }
   },
   {
@@ -59,7 +102,7 @@ let plantArr = [
     perennial: false,
     location: {
       type: "Point",
-      coordinates: [randomFloat(40, 40.5), randomFloat(-3, 5, -4)]
+      coordinates: getFakeCoordsArr()
     }
   },
   {
@@ -77,7 +120,7 @@ let plantArr = [
     perennial: true,
     location: {
       type: "Point",
-      coordinates: [randomFloat(40, 40.5), randomFloat(-3, 5, -4)]
+      coordinates: getFakeCoordsArr()
     }
   },
   {
@@ -95,7 +138,7 @@ let plantArr = [
     perennial: true,
     location: {
       type: "Point",
-      coordinates: [randomFloat(40, 40.5), randomFloat(-3, 5, -4)]
+      coordinates: getFakeCoordsArr()
     }
   },
   {
@@ -113,7 +156,7 @@ let plantArr = [
     perennial: true,
     location: {
       type: "Point",
-      coordinates: [randomFloat(40, 40.5), randomFloat(-3, 5, -4)]
+      coordinates: getFakeCoordsArr()
     }
   },
   {
@@ -131,7 +174,7 @@ let plantArr = [
     perennial: true,
     location: {
       type: "Point",
-      coordinates: [randomFloat(40, 40.5), randomFloat(-3, 5, -4)]
+      coordinates: getFakeCoordsArr()
     }
   }
 ];
@@ -140,17 +183,20 @@ let users = [
   {
     username: "alice",
     password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
-    picture: "./assets/alice.png"
+    picture: "./assets/alice.png",
+    locations: []
   },
   {
     username: "bob",
     password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
-    picture: "./assets/bob.png"
+    picture: "./assets/bob.png",
+    locations: []
   },
   {
     username: "carol",
     password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
-    picture: "./assets/carol.png"
+    picture: "./assets/carol.png",
+    locations: []
   }
 ];
 
@@ -159,11 +205,9 @@ Task.deleteMany()
     return Task.create(tasks);
   })
   .then(tasksCreated => {
-    console.log(
-      `${tasksCreated.length} tasks created with the following id:`
-    );
+    console.log(`${tasksCreated.length} tasks created with the following id:`);
     console.log(tasksCreated.map(u => u._id));
-    
+
     taskArr = tasksCreated;
 
     plantArr.forEach(
@@ -176,17 +220,26 @@ Task.deleteMany()
     return Plant.create(plantArr);
   })
   .then(newPlants => {
-    console.log(
-      `${newPlants.length} plants created with the following id:`
-    );
+    console.log(`${newPlants.length} plants created with the following id:`);
     console.log(newPlants.map(u => u._id));
 
     plantArr = newPlants;
+    plantRefArr = [...plantArr];
     User.deleteMany()
       .then(() => {
-        users.forEach(
-          user => (user.plants = [plantArr.pop()._id, plantArr.pop()._id])
-        );
+        users.forEach(user => {
+          user.plants = [plantArr.pop()._id, plantArr.pop()._id];
+          console.log(user.username);
+          let myPlantsLocations = user.plants.reduce((arr, plantId) => {
+            arr.push(
+              plantRefArr.find(plant => plant._id === plantId).location
+                .coordinates
+            );
+            return arr;
+          }, []);
+          user.locations = getUserLocationArr(myPlantsLocations, 0.002);
+        });
+
         return User.create(users);
       })
       .then(usersCreated => {

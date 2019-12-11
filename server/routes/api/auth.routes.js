@@ -5,6 +5,7 @@ const User = require("../../models/User");
 const uploader = require('../../configs/cloudinary.config')
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
+const ensureLogin = require("connect-ensure-login");
 
 
 router.post('/signup', (req, res, next) => {
