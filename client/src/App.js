@@ -5,8 +5,9 @@ import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Login from './components/Login/Login';
 import SignUp from './components/Signup/Signup';
+import Main from './components/Main/Main';
 import AuthService from './services/AuthService';
-//import PrivateRoute from './guards/PrivateRoute';
+import PrivateRoute from './guards/PrivateRoute';
 
 class App extends React.Component {
   constructor(props) {
@@ -28,9 +29,11 @@ class App extends React.Component {
       this.authService.loggedInUser()
         .then(
           (user) => {
+            console.log("fetch");
             this.setUser(user)
           },
           (error) => {
+            
             this.setUser(false)
           }
         )
@@ -40,6 +43,17 @@ class App extends React.Component {
     }
   }
 
+  logout = (match) => {
+    this.authService.logout()
+    .then((response)=>{
+      this.setState({
+        ...this.state,
+        user : null
+      });
+      match.history.push("/")
+    })
+  }
+
   componentDidMount() {
     this.fetchUser()
   }
@@ -47,19 +61,19 @@ class App extends React.Component {
   render() {
     this.fetchUser()
     const { user } = this.state;
-    console.log(process.env)
     return (
       <div className="App">
         <header className="App-header">
           {user && <Switch>
             <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />  
             <Route exact path="/signup" render={(match) => <SignUp {...match} setUser={this.setUser} />} />
-            {/* <PrivateRoute exact path="/" user={user} component={TodoList} /> */}
+            <Route exact path="/logout" render={(match) => this.logout(match)} />
+            <PrivateRoute exact path="/main" user={user} component={Main}/>
           </Switch> }
           {!user && <Switch>
             <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />  
             <Route exact path="/signup" render={(match) => <SignUp {...match} setUser={this.setUser} />} />
-            {/* <PrivateRoute exact path="/" user={user} component={TodoList} /> */}
+            <PrivateRoute exact path="/main" user={user} component={Main} redirectPath={"/login"}/>
           </Switch> }
         </header>
       </div>
