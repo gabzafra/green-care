@@ -7,7 +7,7 @@ const userSchema = new Schema(
     password: { type: String, required: true, minlength: 8 },
     picture: { type: String, default: "https://i.stack.imgur.com/l60Hf.png" },
     plants: [{ type: Schema.Types.ObjectId, ref: "Plant" }],
-    locations: [[Number, Number]]
+    locations: []
   },
   {
     timestamps: true,

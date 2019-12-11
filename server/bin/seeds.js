@@ -183,19 +183,19 @@ let users = [
   {
     username: "alice",
     password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
-    picture: "./assets/alice.png",
+    picture: "./assets/alice.jpg",
     locations: []
   },
   {
     username: "bob",
     password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
-    picture: "./assets/bob.png",
+    picture: "./assets/bob.jpg",
     locations: []
   },
   {
     username: "carol",
     password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
-    picture: "./assets/carol.png",
+    picture: "./assets/carol.jpg",
     locations: []
   }
 ];
