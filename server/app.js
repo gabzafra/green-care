@@ -30,19 +30,29 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const whitelist = [`http://localhost:${process.env.CLIENT_PORT}`]
+// const whitelist = [`http://localhost:${process.env.CLIENT_PORT}`]
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+//   credentials: true
+// }
+
+const whiteList = [`http://localhost:${process.env.CLIENT_PORT}`]
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
+  origin: (origin, cb) => {
+    const originIsWhitelisted = whiteList.includes(origin);
+    cb(null, originIsWhitelisted)
   },
   credentials: true
 }
-
 app.use(cors(corsOptions));
+
+
 
 app.use(session({
   secret: 'greenygreeny',
@@ -61,7 +71,8 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
     
-
+//app.set("views", path.join(__dirname, "views"));
+//app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 

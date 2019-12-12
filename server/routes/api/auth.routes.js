@@ -10,6 +10,7 @@ const ensureLogin = require("connect-ensure-login");
 
 router.post('/signup', (req, res, next) => {
   const { username, password, picture } = req.body
+  
 
   if (!username || !password) {
     res.status(400).json({ message: 'Provide username and password' });
@@ -93,7 +94,7 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.post('/logout', (req, res, next) => {
+router.post('/logout', ensureLogin.ensureLoggedIn(), (req, res, next) => {
   // req.logout() is defined by passport
   
   req.logout();
