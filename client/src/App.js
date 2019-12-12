@@ -29,7 +29,6 @@ class App extends React.Component {
       this.authService.loggedInUser()
         .then(
           (user) => {
-            console.log("fetch");
             this.setUser(user)
           },
           (error) => {
