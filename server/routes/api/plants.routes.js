@@ -1,12 +1,21 @@
 const router = require("express").Router();
 const ensureLogin = require("connect-ensure-login");
 const Plant = require("../../models/Plant");
+const User = require("../../models/User");
 
-router.get("/plant/:id", (req, res, next) => {
+router.get("/:id", (req, res, next) => {
   const { id } = req.params;
   Plant.findById(id).populate("tasks")
   .then(foundPlant=>res.status(200).json(foundPlant))
   .catch(err=>res.status(500).json(err))
+});
+
+router.get("/user/:id", (req, res, next) => {
+  const { id } = req.params;
+  User.findById(id)
+    .populate("plants")
+    .then(foundUser => res.status(200).json(foundUser.plants))
+    .catch(err => res.status(500).json(err));
 });
 
 router.post("/create", (req, res, next) => {

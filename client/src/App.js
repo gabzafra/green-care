@@ -17,7 +17,8 @@ class App extends React.Component {
   }
 
   state = {
-    user: null
+    user: null,
+    flag: false
   }
 
   setUser = (user) => {
@@ -64,7 +65,7 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           {user && <Switch>
-            <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />  
+            {this.state.flag && <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} /> } 
             <Route exact path="/signup" render={(match) => <SignUp {...match} setUser={this.setUser} />} />
             <Route exact path="/logout" render={(match) => this.logout(match)} />
             <PrivateRoute exact path="/main" user={user} component={Main}/>
