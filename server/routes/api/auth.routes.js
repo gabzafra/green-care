@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require('passport');
 const router = express.Router();
 const User = require("../../models/User");
-
+const uploader = require('../../configs/cloudinary.config')
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 const ensureLogin = require("connect-ensure-login");
@@ -110,5 +110,13 @@ router.get('/loggedin', (req, res, next) => {
   }
   res.status(403).json({ message: 'Unauthorized' });
 });
+
+router.post('/upload', uploader.single('picture'), (req, res) => {
+  if(req.file){
+    res.status(200).json({secure_url: req.file.secure_url })
+  } else {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+})
 
 module.exports = router;
