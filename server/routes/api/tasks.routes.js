@@ -21,6 +21,12 @@ router.post("/create/task", (req, res, next) => {
   .catch(err => res.status(500).json(err)) 
 });
 
+router.put("/update", (req, res, next) => {
+  Task.findByIdAndUpdate(req.body.id, req.body)
+  .then(newPlant=>res.status(200).json(newPlant))
+  .catch(err=>res.status(500).json(err))
+});
+
 router.delete("/delete/task", (req, res, next) => {
   const { plantId, taskId } = req.body;
   Plant.findByIdAndUpdate(plantId,{$pull: { tasks: taskId }})

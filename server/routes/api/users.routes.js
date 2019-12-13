@@ -1,8 +1,6 @@
 const router = require("express").Router();
 const ensureLogin = require("connect-ensure-login");
-const Plant = require("../../models/Plant");
 const User = require("../../models/User");
-const Task = require("../../models/Task");
 const uploader = require('../../configs/cloudinary.config')
 
 router.get("/deep/:id", (req, res, next) => {
@@ -34,8 +32,8 @@ router.get("/shallow/:id", (req, res, next) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.put("/:id", (req, res, next) => {
-  const { id } = req.params;
+router.put("/update", (req, res, next) => {
+  const { id } = req.body;
   User.findByIdAndUpdate(id, req.body)
     .then(() => res.status(200).json({ message : "User updated"}))
     .catch(err => res.status(500).json(err));
