@@ -28,19 +28,11 @@ router.put("/update", (req, res, next) => {
 });
 
 router.delete("/delete/task", (req, res, next) => {
-  const { plantId, taskId } = req.body;
+  const { plantId, id } = req.body;
   Plant.findByIdAndUpdate(plantId,{$pull: { tasks: taskId }})
   .then(() => Task.findByIdAndDelete(taskId))
   .then(result=>res.status(200).json(result))
   .catch(err=>res.status(500).json(err))
 });
-
-router.post('/upload', uploader.single('picture'), (req, res) => {
-  if(req.file){
-    res.status(200).json({secure_url: req.file.secure_url })
-  } else {
-    res.status(500).json({ message: 'Something went wrong' });
-  }
-})
 
 module.exports = router;
