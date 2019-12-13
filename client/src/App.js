@@ -7,6 +7,7 @@ import Login from './components/Login/Login';
 import SignUp from './components/Signup/Signup';
 import Main from './components/Main/Main';
 import AuthService from './services/AuthService';
+import UserService from './services/UserService';
 import PrivateRoute from './guards/PrivateRoute';
 
 class App extends React.Component {
