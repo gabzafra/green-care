@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import "./Signup.css";
 import PageTitle from "../../fontStyles/PageTitle";
 import LoadingOverlay from "../../fontStyles/LoadingOverlay";
+import CloseBtn from "./StyledCloseBtn";
 import AuthService from "../../services/AuthService";
 
 export default class SignUp extends Component {
@@ -53,7 +55,10 @@ export default class SignUp extends Component {
     return (
       <React.Fragment>
         {this.state.flag && <LoadingOverlay />}
-        <PageTitle>SignUp</PageTitle>
+        <div className="header-wrapper">
+          <PageTitle src="./images/green_care_w.svg" alt="green care logo" />
+          <CloseBtn btnColor={"white"} />
+        </div>
 
         <form onSubmit={this.handleSignUp}>
           <label htmlFor="username">Username: </label>

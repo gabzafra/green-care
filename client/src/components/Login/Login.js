@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PageTitle from '../../fontStyles/PageTitle'
 import AuthService from '../../services/AuthService';
+import './Login.css';
+import StyledLogin from './StyledLogin';
+
 
 export default class Login extends Component {
   constructor(props) {
@@ -34,15 +37,11 @@ export default class Login extends Component {
   render() {
     const { username, password } = this.state;
     return (
-      <div>
-        <PageTitle color="black">Login</PageTitle>
+      <div className="login-wrapper">
+        <PageTitle src="./images/green_care_w.svg" alt="green care logo"/>
+        <img src="./images/leaf_w.svg" alt="gren care"></img>
         <form onSubmit={this.handleLogin}>
-          <label htmlFor="username">Username: </label>
-          <input type="text" name="username" value={username} onChange={this.handleChange}/>
-          <label htmlFor="password" >Password: </label>
-          <input type="password" name="password" value={password} onChange={this.handleChange}/>
-
-          <input type="submit" value="Login"/>
+          <StyledLogin username={username} password={password} handleChange={this.handleChange} handleLogin={this.handleLogin} placeholder={"User name"}></StyledLogin>
         </form>
       </div>
     )

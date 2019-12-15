@@ -1,4 +1,6 @@
 body {
   background-color: #6AA76F;
   color: #fff;
+  font-size: 12px;
+  box-sizing: border-box;
 }
