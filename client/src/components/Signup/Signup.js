@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "./Signup.css";
 import PageTitle from "../../fontStyles/PageTitle";
 import LoadingOverlay from "../../fontStyles/LoadingOverlay";
-import CloseBtn from "./StyledCloseBtn";
+import CloseBtn from "../../fontStyles/StyledCloseBtn";
+import Signup from "./StyledSignup";
 import AuthService from "../../services/AuthService";
 
 export default class SignUp extends Component {
@@ -14,8 +15,8 @@ export default class SignUp extends Component {
   state = {
     username: "",
     password: "",
-    picture: "",
-    flag: false
+    passwordR: "",
+    error: ""
   };
 
   handleChange = e => {
@@ -24,44 +25,37 @@ export default class SignUp extends Component {
   };
   handleSignUp = e => {
     e.preventDefault();
-    const { history, setUser } = this.props;
-    this.authService.signup(this.state).then(
-      user => {
-        setUser(user);
-        history.push("/");
-      },
-      error => {
-        console.error(error);
-      }
-    );
-  };
-
-  handleUpload = e => {
-    const uploadData = new FormData();
-    uploadData.append("picture", e.target.files[0]);
-    this.setState({ ...this.state, flag: true });
-    this.authService.upload(uploadData).then(
-      data => {
-        this.setState({ ...this.state, picture: data.secure_url, flag: false });
-      },
-      error => {
-        console.error(error);
-      }
-    );
+    if (this.state.password === this.state.passwordR) {
+      const { history, setUser } = this.props;
+      this.authService.signup(this.state).then(
+        user => {
+          setUser(user);
+          history.push("/");
+        },
+        error => {
+          this.setState({ ...this.state, error: error });
+        }
+      );
+    } else {
+      this.setState({ ...this.state, error: "Password don't match" });
+    }
   };
 
   render() {
-    const { username, password, picture } = this.state;
+    const { username, password, passwordR, error } = this.state;
     return (
       <React.Fragment>
-        {this.state.flag && <LoadingOverlay />}
-        <div className="header-wrapper">
-          <PageTitle src="./images/green_care_w.svg" alt="green care logo" />
-          <CloseBtn btnColor={"white"} />
-        </div>
-
-        <form onSubmit={this.handleSignUp}>
-          <label htmlFor="username">Username: </label>
+        <PageTitle src="./images/green_care_w.svg" alt="green care logo"/>
+        <form className="form-wrapper" onSubmit={this.handleSignUp}>
+          <Signup
+            username={username}
+            password={password}
+            passwordR={passwordR}
+            handleChange={this.handleChange}
+            placeholder={"User name"}
+            error={error}
+          ></Signup>
+          {/* <label htmlFor="username">Username: </label>
           <input
             type="text"
             name="username"
@@ -78,7 +72,7 @@ export default class SignUp extends Component {
             onChange={this.handleChange}
           />
           <input type="file" name="picture" onChange={this.handleUpload} />
-          <input type="submit" value="Create account" />
+          <input type="submit" value="Create account" /> */}
         </form>
       </React.Fragment>
     );

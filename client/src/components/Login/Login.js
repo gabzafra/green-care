@@ -12,8 +12,10 @@ export default class Login extends Component {
   }
 
   state = {
-    username: '',
-    password: ''
+    // username: '',
+    // password: ''
+    username: 'bob',
+    password: '12345678'
   }
   handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +41,7 @@ export default class Login extends Component {
     return (
       <div className="login-wrapper">
         <PageTitle src="./images/green_care_w.svg" alt="green care logo"/>
-        <img src="./images/leaf_w.svg" alt="gren care"></img>
+        <img src="./images/leaf_w.svg" alt="green care"></img>
         <form onSubmit={this.handleLogin}>
           <StyledLogin username={username} password={password} handleChange={this.handleChange} handleLogin={this.handleLogin} placeholder={"User name"}></StyledLogin>
         </form>

@@ -17,15 +17,13 @@ class TaskService {
   };
 
   updateTask = (task) => {
-    task.plantId = plantId;
     return this.instance
       .put("/update", task)
       .then(res => Promise.resolve(res.data))
       .catch(error => console.error(error));
   };
 
-  deleteTask = (plantId, task) => {
-    task.plantId = plantId;
+  deleteTask = (task) => {
     return this.instance
       .put("/delete", task)
       .then(res => Promise.resolve(res.data))

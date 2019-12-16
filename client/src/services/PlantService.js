@@ -8,6 +8,12 @@ class PlantService {
     })
   }
 
+  getPlantById = (plantId) => {
+    return this.instance.get(`/${plantId}`)
+    .then(res => Promise.resolve(res.data))
+    .catch(error => console.error(error))
+  }
+
   getUserPlants = (userId) => {
     return this.instance.get(`/user/${userId}`)
     .then(res => Promise.resolve(res.data))

@@ -76,7 +76,7 @@ const Login = props => {
         onChange={handleChange}
         placeholder={placeholder}
       />
-      <StyledLabel htmlFor="username">Password: </StyledLabel>
+      <StyledLabel htmlFor="password">Password: </StyledLabel>
       <StyledInput
         type="password"
         name="password"
