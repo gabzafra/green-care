@@ -15,10 +15,10 @@ const GenericBtn = styled.button`
 `;
 
 const Button = props => {
-  const { img, handleClick } = props;
+  const { img, clicked } = props;
   return (
     <React.Fragment>    
-        <GenericBtn img={img} />
+        <GenericBtn img={img} onClick={e=>clicked(e)} />
     </React.Fragment>
   );
 };

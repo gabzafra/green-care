@@ -4,7 +4,6 @@ import CloseBtn from "./StyledCloseBtn";
 
 const HeaderWrapper = styled.div`
   width: 100vw;
-  height: 10vh;
   display: flex;
   justify-content: space-between;
   padding-left: 1rem;

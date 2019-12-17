@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { CSSTransition } from "react-transition-group";
 import PageTitle from "../../fontStyles/PageTitle";
 import ImageLoader from "../../fontStyles/ImageLoader";
 import plantService from "../../services/PlantService";
@@ -6,6 +7,7 @@ import LoadingOverlay from "../../fontStyles/LoadingOverlay";
 import FormRange from "../../fontStyles/FormRange";
 import StyledButton from "../../fontStyles/StyledButton";
 import MutableTextInput from "../../fontStyles/MutableTextInput";
+import ModalButtons from "../../fontStyles/ModalButtons";
 import styled from "styled-components";
 import "./PlantDetail.css";
 
@@ -19,6 +21,7 @@ const ButtonsWrapper = styled.div`
   width: 100vw;
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: 1rem;
 `;
 
 export default class PlantDetail extends Component {
@@ -29,13 +32,19 @@ export default class PlantDetail extends Component {
       plant: null,
       loadingFlag: false,
       waterInterval: 7,
-      fertilizerInterval: 7
+      fertilizerInterval: 7,
+      infoToggle: false
     };
   }
 
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ ...this.state, [name]: value });
+  };
+
+  toggleInfo = e => {
+    e.preventDefault();
+    this.setState({ ...this.state, infoToggle: !this.state.infoToggle });
   };
 
   handleUpload = e => {
@@ -82,8 +91,44 @@ export default class PlantDetail extends Component {
         {this.state.plant && (
           <React.Fragment>
             {this.state.loadingFlag && <LoadingOverlay />}
+
+            <aside
+              className={this.state.infoToggle ? "show-aside" : ""}
+              onClick={this.toggleInfo}
+            >
+              <h2>{plant.common_name}</h2>
+              <p>{plant.scientific_name}</p>
+              <div className="row">
+                <h3>Soil preference</h3>
+                <p>{plant.soils_adaptation.join(" ")}</p>
+              </div>
+              <div className="row">
+                <h3>Temperature minimun</h3>
+                <p>{plant.temperature_minimun}&#176;C</p>
+              </div>
+              <div className="row">
+                <h3>Shade tolerance</h3>
+                <p>{plant.shade_tolerance}</p>
+              </div>
+              <div className="row">
+                <h3>Yearly precipitation rate</h3>
+                <p>{plant.year_rain_range}</p>
+              </div>
+              <div className="row">
+                <h3>pH range</h3>
+                <p>{plant.ph_range}</p>
+              </div>
+              <div className="row">
+                <h3>Fertilizer needs</h3>
+                <p>{plant.fertilizer_req}</p>
+              </div>
+              <div className="row">
+                <h3>Perennial</h3>
+                <p>{plant.perennial ? "Yes" : "No"}</p>
+              </div>
+            </aside>
+
             <PageTitle src="../images/green_care_w.svg" alt="green care logo" />
-            <aside className="extend-info"></aside>
             <FormWrapper>
               <MutableTextInput
                 name="name"
@@ -106,7 +151,10 @@ export default class PlantDetail extends Component {
               />
               <ButtonsWrapper>
                 <StyledButton img="../images/map_w.svg" />
-                <StyledButton img="../images/info_w.svg" />
+                <StyledButton
+                  img="../images/info_w.svg"
+                  clicked={this.toggleInfo}
+                />
                 <StyledButton img="../images/trash_b_w.svg" />
               </ButtonsWrapper>
 
@@ -125,6 +173,7 @@ export default class PlantDetail extends Component {
                 labelText="Fertilizer"
               />
             </FormWrapper>
+            <ModalButtons />
           </React.Fragment>
         )}
       </React.Fragment>

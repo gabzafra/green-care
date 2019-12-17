@@ -5,8 +5,8 @@ import colors from "../globalStyles/colors";
 const StyledButton = styled.button`
         border: none;
         background-color: ${colors.green};
-        background-image: ${props => props.btnColor === "white" ? "url(./images/close_w.svg)" :"url(./images/close_g.svg)"};
-        background-position: top-center;
+        background-image: ${props => props.btnColor === "white" ? "url(../images/close_w.svg)" :"url(./images/close_g.svg)"};
+        background-position: center;
         background-repeat: no-repeat;
         width: 10vw;
         height: 5vh;
