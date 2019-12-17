@@ -18,9 +18,9 @@ const GenericBtn = styled.button`
 `;
 
 const BtnWrapper = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1rem;
   .btn-green {
     background: ${colors.green};
     border: 1px solid ${colors.white};
@@ -31,11 +31,36 @@ const BtnWrapper = styled.div`
 `;
 
 const Buttons = props => {
-  const { handleClick } = props;
+  const { handleClick, flavour } = props;
   return (
     <BtnWrapper>
-      <GenericBtn className="btn-red">Cancel</GenericBtn>
-      <GenericBtn className="btn-green">Update</GenericBtn>
+      {(() => {
+        switch (flavour) {
+          case "readonly":
+            return <GenericBtn className="btn-red">Go back</GenericBtn>;
+          case "update" :
+            return (
+              <React.Fragment>
+                <GenericBtn className="btn-red">Cancel</GenericBtn>
+                <GenericBtn className="btn-green">Update</GenericBtn>
+              </React.Fragment>
+            )
+            case "create" :
+            return (
+              <React.Fragment>
+                <GenericBtn className="btn-red">Cancel</GenericBtn>
+                <GenericBtn className="btn-green">Create</GenericBtn>
+              </React.Fragment>
+            )
+          default:
+            return (
+              <React.Fragment>
+                <GenericBtn className="btn-red">Cancel</GenericBtn>
+                <GenericBtn className="btn-green">Accept</GenericBtn>
+              </React.Fragment>
+            );
+        }
+      })()}
     </BtnWrapper>
   );
 };

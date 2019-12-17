@@ -25,13 +25,13 @@ const StaticField = styled.p`
 `;
 
 const Input = props => {
-  const { name, value, handleChange, job, placeholder } = props;
+  const { name, value, handleChange, flavour, placeholder } = props;
   return (
     <React.Fragment>
-      {job === "readonly" ? (
+      {flavour === "readonly" ? (
         <StaticField>{value}</StaticField>
       ) : (
-        <InputField name={name} value={value} handleChange={handleChange} placeholder={placeholder} />
+        <InputField name={name} value={value} onChange={handleChange} placeholder={placeholder} />
       )}
     </React.Fragment>
   );

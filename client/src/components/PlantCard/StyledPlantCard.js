@@ -57,18 +57,39 @@ const PlantCard = props => {
   const { id, picture, name, common_name, deletePlant } = props.plant;
   return (
     <CardContainer>
-      <Link to={`/plant-detail/${id}`}>
+      <Link
+        to={{
+          pathname: `/plant-detail/${id}`,
+          state: {
+            flavour: "readonly"
+          }
+        }}
+      >
         <PlantPortrait id={id} src={picture}></PlantPortrait>
       </Link>
       <div className="side-wrapper">
-        <Link to={`/plant-detail/${id}`}>
+        <Link
+          to={{
+            pathname: `/plant-detail/${id}`,
+            state: {
+              flavour: "readonly"
+            }
+          }}
+        >
           <PlantInfo id={id}>
             <h2>{name}</h2>
             <p>{common_name}</p>
           </PlantInfo>
         </Link>
         <ControlButtons>
-          <Link to={`/plant-update/${id}`}>
+          <Link
+            to={{
+              pathname: `/plant-update/${id}`,
+              state: {
+                flavour: "update"
+              }
+            }}
+          >
             <button className="btn-edit"></button>
           </Link>
           <button

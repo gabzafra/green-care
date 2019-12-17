@@ -19,13 +19,19 @@ const PlantPortrait = styled.img`
 `;
 
 const Loader = props => {
-  const { picture, handleUpload } = props;
+  const { picture, handleUpload, flavour } = props;
   return (
     <React.Fragment>
-      <CustomLabel htmlFor="file-upload" className="custom-file-upload">
+      {flavour !== "readonly" ? (
+        <React.Fragment>
+          <CustomLabel htmlFor="file-upload" className="custom-file-upload">
+            <PlantPortrait src={picture} />
+          </CustomLabel>
+          <InputField id="file-upload" type="file" onChange={handleUpload} />
+        </React.Fragment>
+      ) : (
         <PlantPortrait src={picture} />
-      </CustomLabel>
-      <InputField id="file-upload" type="file" onChange={handleUpload} />
+      )}
     </React.Fragment>
   );
 };

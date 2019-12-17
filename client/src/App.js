@@ -73,6 +73,7 @@ class App extends React.Component {
             <Route exact path="/logout" render={match => this.logout(match)} />
             <PrivateRoute exact path="/main" user={user} component={Main}  />
             <PrivateRoute path="/plant-detail/:plantId" user={user} component={PlantDetail}  />
+            <PrivateRoute path="/plant-update/:plantId" user={user} component={PlantDetail}  />
           </Switch>
         )}
         {!user && (
