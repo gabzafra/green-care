@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./PlantDetail.css";
 import PageTitle from "../../fontStyles/PageTitle";
 import ImageLoader from "../../fontStyles/ImageLoader";
 import plantService from "../../services/PlantService";
@@ -8,6 +7,7 @@ import FormRange from "../../fontStyles/FormRange";
 import StyledButton from "../../fontStyles/StyledButton";
 import MutableTextInput from "../../fontStyles/MutableTextInput";
 import styled from "styled-components";
+import "./PlantDetail.css";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -89,7 +89,7 @@ export default class PlantDetail extends Component {
                 name="name"
                 value={plant.name}
                 handleChange={this.handleChange}
-                job="input"
+                job="readonly"
                 placeholder="Plant name"
               />
               <ImageLoader
@@ -97,10 +97,11 @@ export default class PlantDetail extends Component {
                 handleUpload={this.handleUpload}
               />
               <MutableTextInput
+                className="sub-text"
                 name="common_name"
                 value={plant.common_name}
                 handleChange={this.handleChange}
-                job="input"
+                job="readonly"
                 placeholder="Plant species"
               />
               <ButtonsWrapper>

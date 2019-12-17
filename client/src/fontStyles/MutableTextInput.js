@@ -16,8 +16,12 @@ color: ${colors.gray};
   ::placeholder {
     color: ${colors.gray};
   }`;
+  
 const StaticField = styled.p`
-  background-color: ${colors.red};
+  background-color: ${colors.green};
+  font-family: "Encode Sans"; 
+  font-size: 1.7rem;
+  padding: 1rem;
 `;
 
 const Input = props => {
