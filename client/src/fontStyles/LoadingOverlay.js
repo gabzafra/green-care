@@ -5,7 +5,7 @@ const LoadingOverlay = styled.div`
   width: 100vw;
   height: 100vh;
   background-color : rgba(0,0,0,.2);
-  background-image : url(./images/Spinner-1s-200px.svg);
+  background-image : url(../images/Spinner-1s-200px.svg);
   background-position: center;
   background-repeat: no-repeat;
   z-index : 1000;

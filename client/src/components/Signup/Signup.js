@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "./Signup.css";
 import PageTitle from "../../fontStyles/PageTitle";
-import LoadingOverlay from "../../fontStyles/LoadingOverlay";
-import CloseBtn from "../../fontStyles/StyledCloseBtn";
 import Signup from "./StyledSignup";
 import AuthService from "../../services/AuthService";
 
