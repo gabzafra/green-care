@@ -3,6 +3,9 @@ import { CSSTransition } from "react-transition-group";
 import PageTitle from "../../fontStyles/PageTitle";
 import ImageLoader from "../../fontStyles/ImageLoader";
 import plantService from "../../services/PlantService";
+import userService from "../../services/UserService";
+import taskService from "../../services/TaskService";
+import geoService from "../../services/GeoService";
 import LoadingOverlay from "../../fontStyles/LoadingOverlay";
 import FormRange from "../../fontStyles/FormRange";
 import StyledButton from "../../fontStyles/StyledButton";
@@ -28,11 +31,14 @@ export default class PlantDetail extends Component {
   constructor(props) {
     super(props);
     this.plantService = new plantService();
+    this.userService = new userService();
+    this.taskService = new taskService();
+    this.geoService = new geoService();
     this.state = {
-      plant: null,
+      plant: {},
       name: "",
       common_name: "",
-      loadingFlag: false,
+      loadingFlag: true,
       waterInterval: 7,
       fertilizerInterval: 7,
       infoToggle: false,
@@ -53,7 +59,7 @@ export default class PlantDetail extends Component {
   handleUpload = e => {
     const uploadData = new FormData();
     uploadData.append("picture", e.target.files[0]);
-    
+
     this.setState({ ...this.state, loadingFlag: true });
     this.plantService.uploadPlantImage(uploadData).then(
       data => {
@@ -69,6 +75,12 @@ export default class PlantDetail extends Component {
     );
   };
 
+  handleUpdate = e => {
+    e.preventDefault();
+    const { history } = this.props;
+    history.push("/main");
+  };
+
   getPlant = () => {
     const {
       match: { params }
@@ -79,7 +91,8 @@ export default class PlantDetail extends Component {
           ...this.state,
           plant,
           name: plant.name,
-          common_name: plant.common_name
+          common_name: plant.common_name,
+          loadingFlag: false
         });
       },
       error => {
@@ -89,8 +102,83 @@ export default class PlantDetail extends Component {
     );
   };
 
+  createNewPlant(user) {
+    let locationArr = [40.392351, -3.696842];
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position =>
+        doCreate([position.coords.latitude, position.coords.longitude])
+      );
+    } else {
+      doCreate(locationArr);
+    }
+
+    const doCreate = currentPosition => {
+      let newTasks = [
+        {
+          begin_day: new Date(),
+          day_interval: 7,
+          type: "WATER"
+        },
+        {
+          begin_day: new Date(),
+          day_interval: 15,
+          type: "FERTILIZER"
+        }
+      ];
+
+      let newPlant = {
+        name: "",
+        common_name: "",
+        scientific_name: "",
+        soils_adaptation: [],
+        temperature_minimun: 0,
+        shade_tolerance: "",
+        year_rain_range: "",
+        ph_range: "",
+        fertilizer_req: "",
+        perennial: true,
+        picture: "../images/daisy.jpg",
+        tasks: [],
+        location: {
+          type: "Point",
+          coordinates: currentPosition
+        }
+      };
+
+      this.plantService
+        .createPlant(newPlant)
+        .then(plant => {
+          newPlant = plant;
+          return this.taskService.createTasks(newTasks);
+        })
+        .then(tasks => {
+          newPlant.tasks = [tasks[0]._id, tasks[1]._id];
+          return this.plantService.updatePlant(newPlant);
+        })
+        .then(() => {
+          user.locations.push(currentPosition);
+          user.plants.push(newPlant.id);
+          user.locations = this.geoService.getUserLocationArr(user.locations);
+          return this.userService.updateUser(user)
+        }).then(()=>{
+          this.setState({
+            ...this.state,
+            plant: {...newPlant},
+            name: newPlant.name,
+            common_name: newPlant.common_name,
+            loadingFlag: false
+          });
+        })
+        .catch(error => console.error(error));
+    };
+  }
+
   componentDidMount() {
-    this.getPlant();
+    if (this.props.location.state.flavour === "create") {
+      this.createNewPlant({ ...this.props.loggedInUser });
+    } else {
+      this.getPlant();
+    }
   }
 
   render() {
@@ -192,7 +280,7 @@ export default class PlantDetail extends Component {
                     labelText="Fertilizer"
                   />
                 </FormWrapper>
-                <ModalButtons flavour={flavour} />
+                <ModalButtons flavour={flavour} updateHandler={this.handleUpdate} />
               </React.Fragment>
             )}
           </React.Fragment>

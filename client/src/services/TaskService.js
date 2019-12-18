@@ -3,10 +3,17 @@ import axios from "axios";
 class TaskService {
   constructor() {
     this.instance = axios.create({
-      baseURL: `${process.env.REACT_APP_API_URL}/plants`,
+      baseURL: `${process.env.REACT_APP_API_URL}/tasks`,
       withCredentials: true
     });
   }
+
+  createTasks = taskArr => {
+    return this.instance
+      .post("/multicreate", taskArr)
+      .then(res => Promise.resolve(res.data))
+      .catch(error => console.error(error));
+  };
 
   createTask = (plantId, task) => {
     task.plantId = plantId;

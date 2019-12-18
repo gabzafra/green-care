@@ -3,7 +3,7 @@ const Schema = require("mongoose").Schema;
 const IMG_URL = /.*\.(gif|jpe?g|bmp|png)$/gim;
 const plantSchema = new Schema(
   {
-    name: { type: String, required: true },
+    name: String,
     picture: { type: String, default: "https://i.stack.imgur.com/l60Hf.png" },
     tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
     scientific_name: { type: String, default: null },

@@ -35,7 +35,7 @@ const Loader = props => {
           step={1}
           value={value}
           min={1}
-          max={15}
+          max={30}
           onChange={handleChange}
         ></RangeInput>
         <NumberBoard>{value}</NumberBoard>

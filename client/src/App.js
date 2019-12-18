@@ -74,6 +74,7 @@ class App extends React.Component {
             <PrivateRoute exact path="/main" user={user} component={Main}  />
             <PrivateRoute path="/plant-detail/:plantId" user={user} component={PlantDetail}  />
             <PrivateRoute path="/plant-update/:plantId" user={user} component={PlantDetail}  />
+            <PrivateRoute path="/plant/new" user={user} component={PlantDetail}  />
           </Switch>
         )}
         {!user && (

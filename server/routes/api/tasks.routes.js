@@ -4,7 +4,7 @@ const Plant = require("../../models/Plant");
 const Task = require("../../models/Task");
 const uploader = require('../../configs/cloudinary.config')
 
-router.post("/create/task", (req, res, next) => {
+router.post("/create", (req, res, next) => {
   let newTaskInfo;
   const { plantId, begin_day, day_interval, type} = req.body;
   const newTask = new Task({
@@ -19,6 +19,12 @@ router.post("/create/task", (req, res, next) => {
   })
   .then(() => res.status(200).json(newTaskInfo))
   .catch(err => res.status(500).json(err)) 
+});
+
+router.post("/multicreate", (req, res, next) => {
+  Task.create(req.body)
+  .then(newPlant=>res.status(200).json(newPlant))
+  .catch(err=>res.status(500).json(err))
 });
 
 router.put("/update", (req, res, next) => {

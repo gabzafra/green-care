@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import colors from "../globalStyles/colors";
-import StyledButton from "../fontStyles/StyledButton"
+import StyledButton from "../fontStyles/StyledButton";
+import { Link } from "react-router-dom";
 
 const GenericBtn = styled.button`
   font-family: "Encode Sans";
@@ -42,35 +43,44 @@ const BtnWrapper = styled.div`
 `;
 
 const Buttons = props => {
-  const { handleClick, flavour } = props;
+  const { updateHandler, flavour } = props;
   return (
     <BtnWrapper>
       {(() => {
         switch (flavour) {
           case "readonly":
             return <GenericBtn className="btn-red">Go back</GenericBtn>;
-          case "update" :
+          case "update":
             return (
               <React.Fragment>
                 <GenericBtn className="btn-red">Cancel</GenericBtn>
-                <GenericBtn className="btn-green">Update</GenericBtn>
+                <GenericBtn className="btn-green" onClick={e=>updateHandler(e)}>Update</GenericBtn>
               </React.Fragment>
-            )
-            case "create" :
+            );
+          case "create":
             return (
               <React.Fragment>
-                <GenericBtn className="btn-red">Cancel</GenericBtn>
-                <GenericBtn className="btn-green">Create</GenericBtn>
+                <GenericBtn className="btn-green" onClick={e=>updateHandler(e)}>Create</GenericBtn>
               </React.Fragment>
-            )
-            case "main" :
+            );
+          case "main":
             return (
               <React.Fragment>
-                <StyledButton img={"../images/calendar_w.svg"}/>
-                <GenericBtn className="btn-new">+</GenericBtn>
-                <StyledButton img={"../images/map_w.svg"}/>
+                <StyledButton img={"../images/calendar_w.svg"} />
+                <Link
+                  to={{
+                    pathname: `/plant/new`,
+                    state: {
+                      flavour: "create"
+                    }
+                  }}
+                >
+                  <GenericBtn className="btn-new">+</GenericBtn>
+                </Link>
+
+                <StyledButton img={"../images/map_w.svg"} />
               </React.Fragment>
-            )
+            );
           default:
             return (
               <React.Fragment>
