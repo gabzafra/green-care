@@ -4,6 +4,7 @@ import PageTitle from "../../fontStyles/PageTitle";
 import plantService from "../../services/PlantService";
 import taskService from "../../services/TaskService";
 import PlantCard from "../PlantCard/StyledPlantCard";
+import ModalButtons from "../../fontStyles/ModalButtons";
 
 export default class Main extends Component {
   constructor(props) {
@@ -48,13 +49,20 @@ export default class Main extends Component {
   render() {
     return (
       <React.Fragment>
-        <PageTitle src="./images/green_care_w.svg" alt="green care logo" />
-        {this.state.plants.map(plant => (
-          <PlantCard
-            key={plant.id}
-            plant={{ ...plant, deletePlant: this.deletePlant }}
-          ></PlantCard>
-        ))}
+        <div className="fixed-top-aux-padding">
+          <div className="fixed-controls up">
+            <PageTitle src="./images/green_care_w.svg" alt="green care logo" />
+          </div>
+          {this.state.plants.map(plant => (
+            <PlantCard
+              key={plant.id}
+              plant={{ ...plant, deletePlant: this.deletePlant }}
+            ></PlantCard>
+          ))}
+          <div className="fixed-controls down">
+            <ModalButtons flavour="main" />
+          </div>
+        </div>
       </React.Fragment>
     );
   }

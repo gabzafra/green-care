@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import colors from "../globalStyles/colors";
+import StyledButton from "../fontStyles/StyledButton"
 
 const GenericBtn = styled.button`
   font-family: "Encode Sans";
@@ -20,6 +21,7 @@ const GenericBtn = styled.button`
 const BtnWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   margin-top: 1rem;
   .btn-green {
     background: ${colors.green};
@@ -27,6 +29,15 @@ const BtnWrapper = styled.div`
   }
   .btn-red {
     background: ${colors.red};
+  }
+  .btn-new {
+    background: ${colors.white};
+    color: ${colors.green};
+    font-size: 2.5rem;
+    font-weight: 600;
+    padding: 0;
+    line-height: 1rem;
+    align-self: flex-end;
   }
 `;
 
@@ -50,6 +61,14 @@ const Buttons = props => {
               <React.Fragment>
                 <GenericBtn className="btn-red">Cancel</GenericBtn>
                 <GenericBtn className="btn-green">Create</GenericBtn>
+              </React.Fragment>
+            )
+            case "main" :
+            return (
+              <React.Fragment>
+                <StyledButton img={"../images/calendar_w.svg"}/>
+                <GenericBtn className="btn-new">+</GenericBtn>
+                <StyledButton img={"../images/map_w.svg"}/>
               </React.Fragment>
             )
           default:

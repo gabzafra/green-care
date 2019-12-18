@@ -8,6 +8,7 @@ const GenericBtn = styled.button`
   background-image: url(${props => props.img});
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
   width: 4rem;
   height: 4rem;
   margin-right: 1rem;
