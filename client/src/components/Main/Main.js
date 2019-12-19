@@ -63,7 +63,7 @@ export default class Main extends Component {
       <React.Fragment>
         <div className="fixed-top-aux-padding">
           <div className="fixed-controls up">
-            <PageTitle src="./images/green_care_w.svg" alt="green care logo" />
+            <PageTitle logoutHandler={this.props.handleLogout} />
           </div>
           {this.state.plants.map(plant => (
             <PlantCard

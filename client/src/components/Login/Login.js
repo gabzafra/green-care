@@ -3,6 +3,7 @@ import PageTitle from '../../fontStyles/PageTitle'
 import AuthService from '../../services/AuthService';
 import './Login.css';
 import StyledLogin from './StyledLogin';
+import LeafLogo from '../../fontStyles/Leaf';
 
 
 export default class Login extends Component {
@@ -40,8 +41,8 @@ export default class Login extends Component {
     const { username, password } = this.state;
     return (
       <div className="login-wrapper">
-        <PageTitle src="./images/green_care_w.svg" alt="green care logo"/>
-        <img src="./images/leaf_w.svg" alt="green care"></img>
+        <PageTitle />
+        <LeafLogo />
         <form onSubmit={this.handleLogin}>
           <StyledLogin username={username} password={password} handleChange={this.handleChange} handleLogin={this.handleLogin} placeholder={"User name"}></StyledLogin>
         </form>

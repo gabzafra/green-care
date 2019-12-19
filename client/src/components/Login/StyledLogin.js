@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import colors from "../../globalStyles/colors";
+import { Link } from "react-router-dom";
 
 const StyledLogin = styled.div`
   display: flex;
@@ -87,7 +88,8 @@ const Login = props => {
         <button className={"btn-green"}>
           <input type="submit" value="Enter" />
         </button>
-        <button>New user</button>
+        <Link to={{pathname:"/signup"}}><button>New user</button></Link>
+        
       </div>
     </StyledLogin>
   );

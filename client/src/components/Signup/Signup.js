@@ -43,7 +43,7 @@ export default class SignUp extends Component {
     const { username, password, passwordR, error } = this.state;
     return (
       <React.Fragment>
-        <PageTitle src="./images/green_care_w.svg" alt="green care logo"/>
+        <PageTitle src="./images/green_care_w.svg" alt="green care logo" logoutHandler={this.props.handleLogout} />
         <form className="form-wrapper" onSubmit={this.handleSignUp}>
           <Signup
             username={username}

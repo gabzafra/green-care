@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./components/Login/Login";
 import SignUp from "./components/Signup/Signup";
 import Main from "./components/Main/Main";
+import Profile from "./components/Profile/Profile"
 import PlantDetail from "./components/PlantDetail/PlantDetail";
 import AuthService from "./services/AuthService";
 import PrivateRoute from "./guards/PrivateRoute";
@@ -40,13 +41,12 @@ class App extends React.Component {
     }
   };
 
-  logout = match => {
+  logout = () => {
     this.authService.logout().then(response => {
       this.setState({
         ...this.state,
         user: null
       });
-      match.history.push("/login");
     });
   };
 
@@ -70,11 +70,11 @@ class App extends React.Component {
               path="/signup"
               render={match => <SignUp {...match} setUser={this.setUser} />}
             />
-            <Route exact path="/logout" render={match => this.logout(match)} />
-            <PrivateRoute exact path="/main" user={user} component={Main}  />
-            <PrivateRoute path="/plant-detail/:plantId" user={user} component={PlantDetail}  />
-            <PrivateRoute path="/plant-update/:plantId" user={user} component={PlantDetail}  />
-            <PrivateRoute path="/plant/new" user={user} component={PlantDetail}  />
+            <PrivateRoute exact path="/main" user={user} component={Main} logoutHandler={this.logout}/>
+            <PrivateRoute path="/plant-detail/:plantId" user={user} component={PlantDetail} logoutHandler={this.logout} />
+            <PrivateRoute path="/plant-update/:plantId" user={user} component={PlantDetail} logoutHandler={this.logout} />
+            <PrivateRoute path="/plant/new" user={user} component={PlantDetail} logoutHandler={this.logout} />
+            <PrivateRoute path="/profile" user={user} component={Profile} logoutHandler={this.logout} />
           </Switch>
         )}
         {!user && (
@@ -89,7 +89,10 @@ class App extends React.Component {
               path="/signup"
               render={match => <SignUp {...match} setUser={this.setUser} />}
             />
-            <PrivateRoute exact path="/" user={user} component={Main} redirectPath="/login"/>
+            <Route
+              path="/"
+              render={match => <Login {...match} setUser={this.setUser} />}
+            />
           </Switch>
         )}
       </div>

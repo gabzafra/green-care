@@ -299,10 +299,7 @@ export default class PlantDetail extends Component {
                   </div>
                 </aside>
 
-                <PageTitle
-                  src="../images/green_care_w.svg"
-                  alt="green care logo"
-                />
+                <PageTitle src="./images/green_care_w.svg" alt="green care logo" logoutHandler={this.props.handleLogout} />
                 <FormWrapper>
                   <MutableTextInput
                     name="name"

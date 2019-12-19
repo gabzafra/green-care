@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CloseBtn from "./StyledCloseBtn";
+import ProfileBtn from "./ProfileBtn";
 
 const HeaderWrapper = styled.div`
   width: 100vw;
@@ -11,15 +12,23 @@ const HeaderWrapper = styled.div`
 `;
 
 const LogoImg = styled.img`
-  width: 70vw;
+  width: 75vw;
   height: 10vh;
+`;
+
+const ControlsWrapper = styled.div`
+ display:flex;
+ flex-direction: column;
 `;
 
 const PageTitle = props => {
   return (
     <HeaderWrapper>
-      <LogoImg src={props.src} alt={props.alt} />
-      <CloseBtn btnColor={"white"} />
+      <LogoImg src="../images/green_care_w.svg" alt="green care logo" />
+      <ControlsWrapper>
+        <CloseBtn btnColor={"white"} logout={props.logoutHandler}/>
+        <ProfileBtn btnColor={"white"} />
+      </ControlsWrapper>
     </HeaderWrapper>
   );
 };

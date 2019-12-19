@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const StyledButton = styled.button`
         border: none;
         background-color: ${colors.green};
-        background-image: ${props => props.btnColor === "white" ? "url(../images/close_w.svg)" :"url(./images/close_g.svg)"};
+        background-image: ${props => props.btnColor === "white" ? "url(../images/user_w.svg)" :"url(./images/user_g.svg)"};
         background-position: center;
         background-repeat: no-repeat;
         width: 5vw;
@@ -15,11 +15,13 @@ const StyledButton = styled.button`
         margin-top: 1rem;
 `;
 
-const CloseBtn = props => {
-    const { btnColor,logout } = props;
+const ProfileBtn = props => {
+    const { btnColor } = props;
     return (
-            <StyledButton btnColor={btnColor} onClick={logout} />
+        <Link to={{pathname: `/profile`}}>
+            <StyledButton btnColor={btnColor} />
+        </Link>
     );
 };
 
-export default CloseBtn;
+export default ProfileBtn;
