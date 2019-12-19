@@ -50,20 +50,16 @@ const Buttons = props => {
         switch (flavour) {
           case "readonly":
             return (
-              <Link
-                to={{pathname: `/main`}}
-              >
+              <Link to={{ pathname: `/main` }}>
                 <GenericBtn className="btn-red">Go back</GenericBtn>
               </Link>
             );
           case "update":
             return (
               <React.Fragment>
-              <Link
-                to={{pathname: `/main`}}
-              >
-                <GenericBtn className="btn-red">Cancel</GenericBtn>
-              </Link>
+                <Link to={{ pathname: `/main` }}>
+                  <GenericBtn className="btn-red">Cancel</GenericBtn>
+                </Link>
                 <GenericBtn
                   className="btn-green"
                   onClick={e => updateHandler(e)}
@@ -98,18 +94,27 @@ const Buttons = props => {
                   <GenericBtn className="btn-new">+</GenericBtn>
                 </Link>
 
-                <StyledButton img={"../images/map_w.svg"} />
+                <Link
+                  to={{
+                    pathname: `/plants-map`
+                  }}
+                >
+                  <StyledButton img={"../images/map_w.svg"} clicked={()=>""} />
+                </Link>
               </React.Fragment>
             );
           default:
             return (
               <React.Fragment>
-              <Link
-                to={{pathname: `/main`}}
-              >
-                <GenericBtn className="btn-red">Cancel</GenericBtn>
-              </Link>
-                <GenericBtn className="btn-green" onClick={e => updateHandler(e)}>Accept</GenericBtn>
+                <Link to={{ pathname: `/main` }}>
+                  <GenericBtn className="btn-red">Cancel</GenericBtn>
+                </Link>
+                <GenericBtn
+                  className="btn-green"
+                  onClick={e => updateHandler(e)}
+                >
+                  Accept
+                </GenericBtn>
               </React.Fragment>
             );
         }

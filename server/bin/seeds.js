@@ -13,7 +13,7 @@ const bcryptSalt = 10;
 require("../configs/db.config");
 
 function getFakeCoordsArr() {
-  return [randomFloat(40, 40.00005), randomFloat(-3.5, -3.50005)];
+  return [randomFloat(40, 40.0005), randomFloat(-3.5, -3.5005)];
 }
 
 function calcDistance(lat1, lng1, lat2, lng2) {
@@ -182,21 +182,21 @@ let plantArr = [
 let users = [
   {
     username: "alice",
-    password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
+    password: bcrypt.hashSync("a", bcrypt.genSaltSync(bcryptSalt)),
     picture: "https://res.cloudinary.com/dgn5dpodw/image/upload/v1576512716/greencare/alice.jpg.jpg",
     email: "alice@one.email.com",
     locations: []
   },
   {
     username: "bob",
-    password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
+    password: bcrypt.hashSync("b", bcrypt.genSaltSync(bcryptSalt)),
     picture: "https://res.cloudinary.com/dgn5dpodw/image/upload/v1576513018/greencare/bob.jpg.jpg",
     email: "bob@one.email.com",
     locations: []
   },
   {
     username: "carol",
-    password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
+    password: bcrypt.hashSync("c", bcrypt.genSaltSync(bcryptSalt)),
     picture: "https://res.cloudinary.com/dgn5dpodw/image/upload/v1576505874/greencare/carol.jpg.jpg",
     email: "carol@one.email.com",
     locations: []

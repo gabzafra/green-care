@@ -8,6 +8,7 @@ import Profile from "./components/Profile/Profile"
 import PlantDetail from "./components/PlantDetail/PlantDetail";
 import AuthService from "./services/AuthService";
 import PrivateRoute from "./guards/PrivateRoute";
+import GoogleMap from "./components/GmapsMap/GmapsMap";
 
 class App extends React.Component {
   constructor(props) {
@@ -71,10 +72,13 @@ class App extends React.Component {
               render={match => <SignUp {...match} setUser={this.setUser} />}
             />
             <PrivateRoute exact path="/main" user={user} component={Main} logoutHandler={this.logout}/>
-            <PrivateRoute path="/plant-detail/:plantId" user={user} component={PlantDetail} logoutHandler={this.logout} />
-            <PrivateRoute path="/plant-update/:plantId" user={user} component={PlantDetail} logoutHandler={this.logout} />
-            <PrivateRoute path="/plant/new" user={user} component={PlantDetail} logoutHandler={this.logout} />
-            <PrivateRoute path="/profile" user={user} component={Profile} logoutHandler={this.logout} />
+            <PrivateRoute exact path="/plant-detail/:plantId" user={user} component={PlantDetail} logoutHandler={this.logout} />
+            <PrivateRoute exact path="/plant-update/:plantId" user={user} component={PlantDetail} logoutHandler={this.logout} />
+            <PrivateRoute exact path="/plant/new" user={user} component={PlantDetail} logoutHandler={this.logout} />
+            <PrivateRoute exact path="/profile" user={user} component={Profile} logoutHandler={this.logout} />
+            <PrivateRoute exact path="/plants-map" user={user} component={GoogleMap} logoutHandler={this.logout} />
+            {/* <PrivateRoute exact path="/map-input" user={user} component={GmapsPlaces} logoutHandler={this.logout} /> */}
+            <PrivateRoute exact path="/map-input" user={user} component={GoogleMap} logoutHandler={this.logout} />
           </Switch>
         )}
         {!user && (

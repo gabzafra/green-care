@@ -51,3 +51,25 @@ aside>p{
     font-size: 1rem;
 }
 
+.map-wrapper {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.map {
+    width: 100vh;
+    height: 100vh;
+}
+
+.map-btn {
+    position: absolute !important;
+    left: 49vh;
+    top: 5vh;
+    cursor: pointer;
+}
+
