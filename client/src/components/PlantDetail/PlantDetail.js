@@ -39,8 +39,8 @@ export default class PlantDetail extends Component {
       name: "",
       common_name: "",
       loadingFlag: true,
-      waterInterval: 7,
-      fertilizerInterval: 7,
+      waterInterval: 0,
+      fertilizerInterval: 0,
       infoToggle: false,
       flavour: props.location.state.flavour
     };
@@ -78,7 +78,52 @@ export default class PlantDetail extends Component {
   handleUpdate = e => {
     e.preventDefault();
     const { history } = this.props;
-    history.push("/main");
+    let plant = {
+      ...this.state.plant,
+      common_name: this.state.common_name,
+      name: this.state.name
+    };
+    let tasks = this.state.plant.tasks.filter(task => task);
+    if (tasks.length > 0) {
+      
+      tasks
+        .sort((a, b) => a.type - b.type)
+        .forEach(task =>
+          task.type === "WATER"
+            ? (task.day_interval = this.state.waterInterval)
+            : (task.day_interval = this.state.fertilizerInterval)
+        );
+      delete plant.tasks;
+      this.plantService
+        .updatePlant(plant)
+        .then(() => {
+          tasks.forEach(task => this.taskService.updateTask(task));
+        })
+        .then(() => history.push("/main"));
+    } else {
+      tasks = [
+        {
+          begin_day: new Date(),
+          day_interval: this.state.waterInterval,
+          type: "WATER"
+        },
+        {
+          begin_day: new Date(),
+          day_interval: this.state.fertilizerInterval,
+          type: "FERTILIZER"
+        }
+      ];
+      console.log(plant);
+      
+      this.taskService
+        .createTasks(tasks)
+        .then(tasks => {
+          console.log(tasks);
+          plant.tasks = [tasks[0].id, tasks[1].id];
+          return this.plantService.updatePlant(plant);
+        })
+        .then(() => history.push("/main"));
+    }
   };
 
   getPlant = () => {
@@ -92,7 +137,9 @@ export default class PlantDetail extends Component {
           plant,
           name: plant.name,
           common_name: plant.common_name,
-          loadingFlag: false
+          loadingFlag: false,
+          waterInterval: plant.tasks[0].day_interval,
+          fertilizerInterval: plant.tasks[1].day_interval
         });
       },
       error => {
@@ -116,12 +163,12 @@ export default class PlantDetail extends Component {
       let newTasks = [
         {
           begin_day: new Date(),
-          day_interval: 7,
+          day_interval: 0,
           type: "WATER"
         },
         {
           begin_day: new Date(),
-          day_interval: 15,
+          day_interval: 0,
           type: "FERTILIZER"
         }
       ];
@@ -152,26 +199,51 @@ export default class PlantDetail extends Component {
           return this.taskService.createTasks(newTasks);
         })
         .then(tasks => {
-          newPlant.tasks = [tasks[0]._id, tasks[1]._id];
+          newPlant.tasks = [tasks[0].id, tasks[1].id];
           return this.plantService.updatePlant(newPlant);
         })
         .then(() => {
           user.locations.push(currentPosition);
           user.plants.push(newPlant.id);
           user.locations = this.geoService.getUserLocationArr(user.locations);
-          return this.userService.updateUser(user)
-        }).then(()=>{
+          return this.userService.updateUser(user);
+        })
+        .then(()=>this.plantService.getPlantById(newPlant.id))
+        .then((createdPlant) => {
+          console.log(createdPlant);
           this.setState({
             ...this.state,
-            plant: {...newPlant},
-            name: newPlant.name,
-            common_name: newPlant.common_name,
-            loadingFlag: false
+            plant: { ...createdPlant },
+            name: createdPlant.name,
+            common_name: createdPlant.common_name,
+            loadingFlag: false,
           });
         })
         .catch(error => console.error(error));
     };
   }
+
+  deleteHandle = e => {
+    e.preventDefault();
+    let user = {...this.props.loggedInUser};
+    let plant = this.state.plant;
+    this.plantService
+        .deletePlant(plant.id)
+        .then(()=>this.userService.deleteUserPlant(user, plant))
+        .then(() =>this.userService.getUserByIdDeep(user.id))
+        .then(newUser =>{
+          let userCoords = [];
+          newUser.plants.forEach(plant => userCoords.push(plant.location.coordinates));
+          newUser.locations = this.geoService.getUserLocationArr(userCoords, 0.002);
+          newUser.plants = newUser.plants.reduce((acc, plant)=>{
+            acc.push(plant.id);
+            return acc
+          },[])
+          return this.userService.updateUser(newUser);
+        })
+        .then(() => this.props.history.push("/main"))
+        .catch(error => console.error(error));
+  };
 
   componentDidMount() {
     if (this.props.location.state.flavour === "create") {
@@ -258,7 +330,7 @@ export default class PlantDetail extends Component {
                       img="../images/info_w.svg"
                       clicked={this.toggleInfo}
                     />
-                    <StyledButton img="../images/trash_b_w.svg" />
+                    <StyledButton img="../images/trash_b_w.svg" clicked={this.deleteHandle}/>
                   </ButtonsWrapper>
 
                   <FormRange
@@ -280,7 +352,10 @@ export default class PlantDetail extends Component {
                     labelText="Fertilizer"
                   />
                 </FormWrapper>
-                <ModalButtons flavour={flavour} updateHandler={this.handleUpdate} />
+                <ModalButtons
+                  flavour={flavour}
+                  updateHandler={this.handleUpdate}
+                />
               </React.Fragment>
             )}
           </React.Fragment>

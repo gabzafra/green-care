@@ -32,6 +32,13 @@ class UserService {
     .catch(error => console.error(error))
   }
 
+  deleteUserPlant= (user, plant) => {
+    let payload = {user:user, plant: plant}
+    return this.instance.put('/deletePlant',payload)
+    .then(res => Promise.resolve(res.data))
+    .catch(error => console.error(error))
+  }
+
   uploadUserImage = (picture) => {
     return this.instance.post('/upload', picture)
     .then(res => Promise.resolve(res.data))
