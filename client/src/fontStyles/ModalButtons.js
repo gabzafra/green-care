@@ -49,18 +49,38 @@ const Buttons = props => {
       {(() => {
         switch (flavour) {
           case "readonly":
-            return <GenericBtn className="btn-red">Go back</GenericBtn>;
+            return (
+              <Link
+                to={{pathname: `/main`}}
+              >
+                <GenericBtn className="btn-red">Go back</GenericBtn>
+              </Link>
+            );
           case "update":
             return (
               <React.Fragment>
+              <Link
+                to={{pathname: `/main`}}
+              >
                 <GenericBtn className="btn-red">Cancel</GenericBtn>
-                <GenericBtn className="btn-green" onClick={e=>updateHandler(e)}>Update</GenericBtn>
+              </Link>
+                <GenericBtn
+                  className="btn-green"
+                  onClick={e => updateHandler(e)}
+                >
+                  Update
+                </GenericBtn>
               </React.Fragment>
             );
           case "create":
             return (
               <React.Fragment>
-                <GenericBtn className="btn-green" onClick={e=>updateHandler(e)}>Create</GenericBtn>
+                <GenericBtn
+                  className="btn-green"
+                  onClick={e => updateHandler(e)}
+                >
+                  Create
+                </GenericBtn>
               </React.Fragment>
             );
           case "main":
@@ -84,8 +104,12 @@ const Buttons = props => {
           default:
             return (
               <React.Fragment>
+              <Link
+                to={{pathname: `/main`}}
+              >
                 <GenericBtn className="btn-red">Cancel</GenericBtn>
-                <GenericBtn className="btn-green">Accept</GenericBtn>
+              </Link>
+                <GenericBtn className="btn-green" onClick={e => updateHandler(e)}>Accept</GenericBtn>
               </React.Fragment>
             );
         }

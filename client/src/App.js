@@ -41,7 +41,7 @@ class App extends React.Component {
     }
   };
 
-  logout = () => {
+  logout = (match) => {
     this.authService.logout().then(response => {
       this.setState({
         ...this.state,
@@ -91,7 +91,7 @@ class App extends React.Component {
             />
             <Route
               path="/"
-              render={match => <Login {...match} setUser={this.setUser} />}
+              render={match => <Redirect to={{pathname: "/login"}}/>}
             />
           </Switch>
         )}

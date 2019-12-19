@@ -32,6 +32,12 @@ class UserService {
     .catch(error => console.error(error))
   }
 
+  updateUserProfile = (user) => {
+    return this.instance.put('/update-profile',user)
+    .then(res => Promise.resolve(res.data))
+    .catch(error => console.error(error))
+  }
+
   deleteUserPlant= (user, plant) => {
     let payload = {user:user, plant: plant}
     return this.instance.put('/deletePlant',payload)

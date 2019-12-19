@@ -3,6 +3,7 @@ import styled from "styled-components";
 import "./StyledPlantCard.css";
 import colors from "../../globalStyles/colors";
 import { Link } from "react-router-dom";
+import capitalize from "../../globalStyles/utils"
 
 const CardContainer = styled.div`
   display: flex;
@@ -77,8 +78,8 @@ const PlantCard = props => {
           }}
         >
           <PlantInfo id={id}>
-            <h2>{name}</h2>
-            <p>{common_name}</p>
+            <h2>{capitalize(name)}</h2>
+            <p>{capitalize(common_name)}</p>
           </PlantInfo>
         </Link>
         <ControlButtons>

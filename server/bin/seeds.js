@@ -183,21 +183,21 @@ let users = [
   {
     username: "alice",
     password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
-    picture: "./assets/alice.jpg",
+    picture: "https://res.cloudinary.com/dgn5dpodw/image/upload/v1576512716/greencare/alice.jpg.jpg",
     email: "alice@one.email.com",
     locations: []
   },
   {
     username: "bob",
     password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
-    picture: "./assets/bob.jpg",
+    picture: "https://res.cloudinary.com/dgn5dpodw/image/upload/v1576513018/greencare/bob.jpg.jpg",
     email: "bob@one.email.com",
     locations: []
   },
   {
     username: "carol",
     password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(bcryptSalt)),
-    picture: "./assets/carol.jpg",
+    picture: "https://res.cloudinary.com/dgn5dpodw/image/upload/v1576505874/greencare/carol.jpg.jpg",
     email: "carol@one.email.com",
     locations: []
   }

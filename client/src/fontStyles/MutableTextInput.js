@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import colors from "../globalStyles/colors";
+import capitalize from "../globalStyles/utils"
 
 const InputField = styled.input`
 color: ${colors.gray};
@@ -25,13 +26,13 @@ const StaticField = styled.p`
 `;
 
 const Input = props => {
-  const { name, value, handleChange, flavour, placeholder } = props;
+  const { name, value, handleChange, flavour, placeholder, id } = props;
   return (
     <React.Fragment>
       {flavour === "readonly" ? (
-        <StaticField>{value}</StaticField>
+        <StaticField>{capitalize(value)}</StaticField>
       ) : (
-        <InputField name={name} value={value} onChange={handleChange} placeholder={placeholder} />
+        <InputField name={name} value={value} onChange={handleChange} placeholder={placeholder} id={id || null}/>
       )}
     </React.Fragment>
   );

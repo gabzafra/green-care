@@ -13,6 +13,7 @@ import MutableTextInput from "../../fontStyles/MutableTextInput";
 import ModalButtons from "../../fontStyles/ModalButtons";
 import styled from "styled-components";
 import "./PlantDetail.css";
+import capitalize from "../../globalStyles/utils"
 
 const FormWrapper = styled.form`
   display: flex;
@@ -113,7 +114,6 @@ export default class PlantDetail extends Component {
           type: "FERTILIZER"
         }
       ];
-      console.log(plant);
       
       this.taskService
         .createTasks(tasks)
@@ -267,11 +267,11 @@ export default class PlantDetail extends Component {
                   className={this.state.infoToggle ? "show-aside" : ""}
                   onClick={this.toggleInfo}
                 >
-                  <h2>{plant.common_name}</h2>
-                  <p>{plant.scientific_name}</p>
+                  <h2>{capitalize(plant.common_name)}</h2>
+                  <p>{capitalize(plant.scientific_name)}</p>
                   <div className="row">
                     <h3>Soil preference</h3>
-                    <p>{plant.soils_adaptation.join(" ")}</p>
+                    <p>{plant.soils_adaptation.map(a=>capitalize(a)).join(", ")}</p>
                   </div>
                   <div className="row">
                     <h3>Temperature minimun</h3>
