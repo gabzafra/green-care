@@ -5,6 +5,7 @@ import plantService from "../../services/PlantService";
 import userService from "../../services/UserService";
 import taskService from "../../services/TaskService";
 import geoService from "../../services/GeoService";
+import trefService from "../../services/TrefService";
 import LoadingOverlay from "../../fontStyles/LoadingOverlay";
 import FormRange from "../../fontStyles/FormRange";
 import StyledButton from "../../fontStyles/StyledButton";
@@ -36,6 +37,7 @@ export default class PlantDetail extends Component {
     this.userService = new userService();
     this.taskService = new taskService();
     this.geoService = new geoService();
+    this.trefService = new trefService();
     this.state = {
       plant: {},
       name: "",
@@ -71,6 +73,10 @@ export default class PlantDetail extends Component {
     e.preventDefault();
     this.setState({ ...this.state, mapToggle: !this.state.mapToggle });
   };
+
+  logPlant = name => {
+    console.log(this.trefService.getByName(name));
+  }
 
   handleUpload = e => {
     const uploadData = new FormData();
@@ -158,8 +164,8 @@ export default class PlantDetail extends Component {
           loadingFlag: false,
           waterInterval: plant.tasks[0].day_interval,
           fertilizerInterval: plant.tasks[1].day_interval,
-          lat: this.state.lat,
-          lng: this.state.lng,
+          lat: plant.location.coordinates[0],
+          lng: plant.location.coordinates[1]
         });
       },
       error => {
@@ -273,6 +279,7 @@ export default class PlantDetail extends Component {
   };
 
   componentDidMount() {
+    this.logPlant("Canadian serviceberry");
     if (this.props.location.state.flavour === "create") {
       this.createNewPlant({ ...this.props.loggedInUser });
     } else {
