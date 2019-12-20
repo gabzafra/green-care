@@ -123,6 +123,14 @@ export default class PlantDetail extends Component {
         .updatePlant(plant)
         .then(() => {
           tasks.forEach(task => this.taskService.updateTask(task));
+        }).then(() =>{
+          let user = this.props.loggedInUser;
+          console.log(user);
+          user.locations.push([this.state.lat,this.state.lng]);
+          user.locations = this.geoService.getUserLocationArr(user.locations);
+          console.log(user);
+          return this.userService.updateUser(user)
+          
         })
         .then(() => history.push("/main"));
     } else {
@@ -146,7 +154,15 @@ export default class PlantDetail extends Component {
           plant.tasks = [tasks[0].id, tasks[1].id];
           return this.plantService.updatePlant(plant);
         })
-        .then(() => history.push("/main"));
+        .then(() =>{
+          let user = this.props.loggedInUser;
+          console.log(user);
+          user.locations.push([this.state.lat,this.state.lng]);
+          user.locations = this.geoService.getUserLocationArr(user.locations);
+          console.log(user);
+          return this.userService.updateUser(user)
+          
+        }).then(()=>history.push("/main"));
     }
   };
 
