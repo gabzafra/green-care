@@ -14,7 +14,7 @@ import styled from "styled-components";
 import "./PlantDetail.css";
 import capitalize from "../../globalStyles/utils";
 import GmapsMap from "../GmapsMap/GmapsMap";
-import CloseBtn from "../../fontStyles/StyledCloseBtn";
+import InnerBgImg from "./close_g.svg";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -45,6 +45,8 @@ export default class PlantDetail extends Component {
       fertilizerInterval: 0,
       infoToggle: false,
       mapToggle: false,
+      lat: 0,
+      lng: 0,
       flavour: props.location.state.flavour
     };
   }
@@ -53,6 +55,12 @@ export default class PlantDetail extends Component {
     const { name, value } = e.target;
     this.setState({ ...this.state, [name]: value });
   };
+
+  handleLocChange = coords => {
+    const {lat,lng} = coords;
+    console.log(coords)
+    this.setState({...this.state, lat:lat,lng: lng})
+  }
 
   toggleInfo = e => {
     e.preventDefault();
@@ -89,7 +97,11 @@ export default class PlantDetail extends Component {
     let plant = {
       ...this.state.plant,
       common_name: this.state.common_name,
-      name: this.state.name
+      name: this.state.name,
+      location: {
+        type: "Point",
+        coordinates: [this.state.lat,this.state.lng]
+      }
     };
     let tasks = this.state.plant.tasks.filter(task => task);
     if (tasks.length > 0) {
@@ -145,7 +157,9 @@ export default class PlantDetail extends Component {
           common_name: plant.common_name,
           loadingFlag: false,
           waterInterval: plant.tasks[0].day_interval,
-          fertilizerInterval: plant.tasks[1].day_interval
+          fertilizerInterval: plant.tasks[1].day_interval,
+          lat: this.state.lat,
+          lng: this.state.lng,
         });
       },
       error => {
@@ -222,6 +236,8 @@ export default class PlantDetail extends Component {
             plant: { ...createdPlant },
             name: createdPlant.name,
             common_name: createdPlant.common_name,
+            lat: createdPlant.location.coordinates[0],
+            lng: createdPlant.location.coordinates[1],
             loadingFlag: false
           });
         })
@@ -316,8 +332,8 @@ export default class PlantDetail extends Component {
 
                 {this.state.mapToggle && (
                   <div className="map-wrapper">
-                      <GmapsMap className="map"/>
-                      <button className="map-btn" btnColor="green">WOLOLOLO</button>
+                      <GmapsMap className="map" lat={this.state.lat} lng={this.state.lng} picture={this.state.plant.picture} handleChange={this.handleLocChange}/>
+                      <button className="map-btn" onClick={this.toggleMap} style={{ backgroundImage: "url(" + InnerBgImg +")" }}></button>
                   </div>
                 )}
 

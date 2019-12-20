@@ -1,75 +1,82 @@
 .sub-text {
-    font-family: "Roboto";
-    font-size: 1rem;
+  font-family: "Roboto";
+  font-size: 1rem;
 }
 
-aside{
-    color: #6AA76F;
-    position:absolute;
-    width: 100vw;
-    height: 100vh;
-    background-color: #fff;
-    left: -100vw;
-    transition: left ease-in-out .4s;
-    z-index: 999;
-    font-family: "Encode Sans"
+aside {
+  color: #6aa76f;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  left: -100vw;
+  transition: left ease-in-out 0.4s;
+  z-index: 999;
+  font-family: "Encode Sans";
 }
 
 .show-aside {
-    left: 0;
+  left: 0;
 }
 
-aside>h2{
-    font-weight: 600;
-    font-size: 2rem;
-    text-align: center;
-    padding: 1rem;
+aside > h2 {
+  font-weight: 600;
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem;
 }
 
-aside>p{
-    font-family: "Roboto";
-    font-size: 1.2rem;
-    text-align: center;
+aside > p {
+  font-family: "Roboto";
+  font-size: 1.2rem;
+  text-align: center;
 }
 
-.row{
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    width: 100vw;
-    padding: 2rem 1rem;
-    box-sizing: border-box;
-    flex-wrap: wrap;
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100vw;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
-.row>h3 {
-    font-size: 1.5rem;
+.row > h3 {
+  font-size: 1.5rem;
 }
 
-.row>p {
-    font-family: "Roboto";
-    font-size: 1rem;
+.row > p {
+  font-family: "Roboto";
+  font-size: 1rem;
 }
 
 .map-wrapper {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .map {
-    width: 100vh;
-    height: 100vh;
+  width: 100vh;
+  height: 100vh;
 }
 
 .map-btn {
-    position: absolute !important;
-    left: 49vh;
-    top: 5vh;
-    cursor: pointer;
-}
+  position: absolute;
+  left: 49vh;
+  top: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: rgba(0,0,0,0);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 2.5rem;
+  height: 2.5rem;
 
+}
