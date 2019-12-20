@@ -55,8 +55,7 @@ export default class Profile extends Component {
       new_pass: this.state.new_pass,
       repeat_pass: this.state.repeat_pass
     };
-    this.userService.updateUserProfile(user)
-    .then(() => history.push("/main"))
+    this.userService.updateUserProfile(user).then(() => history.push("/main"));
   };
 
   componentDidMount() {
@@ -78,8 +77,13 @@ export default class Profile extends Component {
             <React.Fragment>
               <h1>{capitalize(user.username)}</h1>
               <form>
+                <ImageLoader
+                  picture={user.picture}
+                  handleUpload={this.handleUpload}
+                  flavour="signup"
+                />
                 <label htmlFor="email">User email</label>
-                <input
+                <input className="big-input"
                   type="email"
                   name="email"
                   value={this.state.email}
@@ -88,30 +92,25 @@ export default class Profile extends Component {
                 />
                 <p>If you want to change your password</p>
                 <label htmlFor="current-pass">Enter current password</label>
-                <input
+                <input className="small-input"
                   type="password"
                   name="current_pass"
                   id="current-pass"
                   onChange={this.handleChange}
                 />
                 <label htmlFor="new-pass">Enter new password</label>
-                <input
+                <input className="small-input"
                   type="password"
                   name="new_pass"
                   id="new-pass"
                   onChange={this.handleChange}
                 />
                 <label htmlFor="repeat-pass">Repeat new password</label>
-                <input
+                <input className="small-input"
                   type="password"
                   name="repeat_pass"
                   id="repeat-pass"
                   onChange={this.handleChange}
-                />
-                <ImageLoader
-                  picture={user.picture}
-                  handleUpload={this.handleUpload}
-                  flavour="signup"
                 />
               </form>
               <ModalButtons updateHandler={this.handleUpdate} />

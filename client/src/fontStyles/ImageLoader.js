@@ -30,7 +30,7 @@ const Loader = props => {
           <InputField id="file-upload" type="file" onChange={handleUpload} />
         </React.Fragment>
       ) : (
-        <PlantPortrait src={picture} />
+        <PlantPortrait className="round-img" src={picture} />
       )}
     </React.Fragment>
   );

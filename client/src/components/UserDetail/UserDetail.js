@@ -4,6 +4,7 @@ import ModalButtons from "../../fontStyles/ModalButtons";
 import userService from "../../services/UserService";
 import capitalize from "../../globalStyles/utils";
 import LoadingOverlay from "../../fontStyles/LoadingOverlay";
+import "./UserDetail.css";
 
 export default class UserDetail extends Component {
   constructor(props) {
@@ -40,14 +41,15 @@ export default class UserDetail extends Component {
           <LoadingOverlay />
         ) : (
           plants && (
-            <React.Fragment>
-              <h1>{capitalize(name)}</h1>
+            <div className="big-div">
+              <h1 >{capitalize(name)}</h1>
               <ImageLoader
                 picture={picture}
                 handleUpload={() => ""}
                 flavour="readonly"
               />
-              <h2>{email}</h2>
+              <h2 className="email-row">{email}</h2>
+              <div className="small-div" ></div>
               {plants.map((plant, idx) => (
                 <ImageLoader
                   key={idx}
@@ -58,7 +60,7 @@ export default class UserDetail extends Component {
               ))}
 
               <ModalButtons updateHandler={() => ""} flavour="readonly" />
-            </React.Fragment>
+            </div>
           )
         )}
       </React.Fragment>
