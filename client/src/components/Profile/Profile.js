@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./Profile.css";
-import ImageLoader from "../../fontStyles/ImageLoader";
-import ModalButtons from "../../fontStyles/ModalButtons";
+import ImageLoader from "../../sharedComponents/ImageLoader";
+import ModalButtons from "../../sharedComponents/ModalButtons";
 import userService from "../../services/UserService";
 import capitalize from "../../globalStyles/utils";
-import LoadingOverlay from "../../fontStyles/LoadingOverlay";
+import LoadingOverlay from "../../sharedComponents/LoadingOverlay";
 
 export default class Profile extends Component {
   constructor(props) {

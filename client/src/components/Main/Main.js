@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./Main.css";
-import PageTitle from "../../fontStyles/PageTitle";
+import PageTitle from "../../sharedComponents/PageTitle";
 import plantService from "../../services/PlantService";
 import taskService from "../../services/TaskService";
 import userService from "../../services/UserService";
 import geoService from "../../services/GeoService"
 import PlantCard from "../PlantCard/StyledPlantCard";
-import ModalButtons from "../../fontStyles/ModalButtons";
+import ModalButtons from "../../sharedComponents/ModalButtons";
 
 export default class Main extends Component {
   constructor(props) {
@@ -63,7 +63,7 @@ export default class Main extends Component {
       <React.Fragment>
         <div className="fixed-top-aux-padding">
           <div className="fixed-controls up">
-            <PageTitle logoutHandler={this.props.handleLogout} />
+            <PageTitle logoutHandler={this.props.handleLogout} controls={true}/>
           </div>
           {this.state.plants.map(plant => (
             <PlantCard

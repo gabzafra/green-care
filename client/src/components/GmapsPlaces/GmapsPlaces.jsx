@@ -4,7 +4,7 @@ import userService from "../../services/UserService";
 import InnerBgImg from "./close_g.svg";
 import "./GmapsPlaces.css";
 import { Link } from "react-router-dom";
-import LoadingOverlay from "../../fontStyles/LoadingOverlay";
+import LoadingOverlay from "../../sharedComponents/LoadingOverlay";
 
 const mapStyles = {
   width: "100%",

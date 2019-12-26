@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Signup.css";
-import PageTitle from "../../fontStyles/PageTitle";
+import PageTitle from "../../sharedComponents/PageTitle";
 import Signup from "./StyledSignup";
 import AuthService from "../../services/AuthService";
 

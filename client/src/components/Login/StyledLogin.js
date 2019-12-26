@@ -27,15 +27,11 @@ const StyledLogin = styled.div`
       padding: 10px;
       margin: .5rem;
       box-sizing: border-box;
-      input {
-        color: ${colors.white};
-        font-size: 1.2rem;
-        font-weight: 600;
-      }
     }
     .btn-green {
       background: ${colors.green};
       border: 1px solid ${colors.white};
+      color: ${colors.white};
     }
   }
 `;
@@ -59,7 +55,7 @@ const StyledInput = styled.input`
 const StyledLabel = styled.label`
   font-family: "Encode Sans";
   font-weight: 400;
-  font-size: 2em;
+  font-size: 1em;
   color: ${colors.white};
   margin-top: 1rem;
   margin-bottom: 0.5rem;
@@ -85,8 +81,8 @@ const Login = props => {
         onChange={handleChange}
       />
       <div className={"button-box"}>
-        <button className={"btn-green"}>
-          <input type="submit" value="Enter" />
+        <button className={"btn-green"} type="submit">
+          Enter
         </button>
         <Link to={{pathname:"/signup"}}><button>New user</button></Link>
         

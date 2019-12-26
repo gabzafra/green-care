@@ -11,15 +11,16 @@ const CustomLabel = styled.label`
 `;
 
 const PlantPortrait = styled.img`
-  width: 178px;
-  height: 178px;
+  width: ${props => props.size ? props.size : "178"}px;
+  height: ${props => props.size ? props.size : "178"}px;
   border-radius: 50%;
   border: 8px solid ${colors.white};
   box-sizing: border-box;
 `;
 
 const Loader = props => {
-  const { picture, handleUpload, flavour } = props;
+  const { picture, handleUpload, flavour, size } = props;
+  console.log(size);
   return (
     <React.Fragment>
       {flavour !== "readonly" ? (
@@ -30,7 +31,7 @@ const Loader = props => {
           <InputField id="file-upload" type="file" onChange={handleUpload} />
         </React.Fragment>
       ) : (
-        <PlantPortrait className="round-img" src={picture} />
+        <PlantPortrait className="round-img" src={picture} size={size}/>
       )}
     </React.Fragment>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import colors from "../globalStyles/colors";
-import StyledButton from "../fontStyles/StyledButton";
+import StyledButton from "../sharedComponents/StyledButton";
 import { Link } from "react-router-dom";
 
 const GenericBtn = styled.button`

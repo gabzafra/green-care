@@ -6,7 +6,7 @@ import ProfileBtn from "./ProfileBtn";
 const HeaderWrapper = styled.div`
   width: 100vw;
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => props.controls ? "space-between" : "center"};
   padding-left: 1rem;
   box-sizing: border-box;
 `;
@@ -17,16 +17,17 @@ const LogoImg = styled.img`
 `;
 
 const ControlsWrapper = styled.div`
- display:flex;
+ display:${props => props.controls ? "flex" : "none"};
  flex-direction: column;
 `;
 
 const PageTitle = props => {
+  const {controls,logoutHandler} = props;
   return (
-    <HeaderWrapper>
+    <HeaderWrapper controls={controls}>
       <LogoImg src="../images/green_care_w.svg" alt="green care logo" />
-      <ControlsWrapper>
-        <CloseBtn btnColor={"white"} logout={props.logoutHandler}/>
+      <ControlsWrapper controls={controls}>
+        <CloseBtn btnColor={"white"} logout={logoutHandler}/>
         <ProfileBtn btnColor={"white"} />
       </ControlsWrapper>
     </HeaderWrapper>

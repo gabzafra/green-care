@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import ImageLoader from "../../fontStyles/ImageLoader";
-import ModalButtons from "../../fontStyles/ModalButtons";
+import ImageLoader from "../../sharedComponents/ImageLoader";
+import ModalButtons from "../../sharedComponents/ModalButtons";
 import userService from "../../services/UserService";
 import capitalize from "../../globalStyles/utils";
-import LoadingOverlay from "../../fontStyles/LoadingOverlay";
+import LoadingOverlay from "../../sharedComponents/LoadingOverlay";
 import "./UserDetail.css";
 
 export default class UserDetail extends Component {
@@ -49,15 +49,18 @@ export default class UserDetail extends Component {
                 flavour="readonly"
               />
               <h2 className="email-row">{email}</h2>
-              <div className="small-div" ></div>
-              {plants.map((plant, idx) => (
+              <div className="small-div" >
+                {plants.splice(0,3).map((plant, idx) => (
                 <ImageLoader
                   key={idx}
                   picture={(plant.picture)}
                   handleUpload={() => ""}
                   flavour="readonly"
+                  size="120"
                 />
               ))}
+              </div>
+              
 
               <ModalButtons updateHandler={() => ""} flavour="readonly" />
             </div>

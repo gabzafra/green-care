@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import PageTitle from "../../fontStyles/PageTitle";
-import ImageLoader from "../../fontStyles/ImageLoader";
+import PageTitle from "../../sharedComponents/PageTitle";
+import ImageLoader from "../../sharedComponents/ImageLoader";
 import plantService from "../../services/PlantService";
 import userService from "../../services/UserService";
 import taskService from "../../services/TaskService";
 import geoService from "../../services/GeoService";
 import trefService from "../../services/TrefService";
-import LoadingOverlay from "../../fontStyles/LoadingOverlay";
-import FormRange from "../../fontStyles/FormRange";
-import StyledButton from "../../fontStyles/StyledButton";
-import MutableTextInput from "../../fontStyles/MutableTextInput";
-import ModalButtons from "../../fontStyles/ModalButtons";
+import LoadingOverlay from "../../sharedComponents/LoadingOverlay";
+import FormRange from "../../sharedComponents/FormRange";
+import StyledButton from "../../sharedComponents/StyledButton";
+import MutableTextInput from "../../sharedComponents/MutableTextInput";
+import ModalButtons from "../../sharedComponents/ModalButtons";
 import styled from "styled-components";
 import "./PlantDetail.css";
 import capitalize from "../../globalStyles/utils";
@@ -364,6 +364,7 @@ export default class PlantDetail extends Component {
                   src="./images/green_care_w.svg"
                   alt="green care logo"
                   logoutHandler={this.props.handleLogout}
+                  controls={true}
                 />
                 <FormWrapper>
                   <MutableTextInput

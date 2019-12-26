@@ -65,7 +65,7 @@ const StyledInput = styled.input`
 const StyledLabel = styled.label`
   font-family: "Encode Sans";
   font-weight: 400;
-  font-size: 2em;
+  font-size: 1em;
   color: ${colors.white};
   margin-top: 1rem;
   margin-bottom: 0.5rem;
