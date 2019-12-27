@@ -59,12 +59,17 @@ export default class Profile extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      ...this.state,
-      user: { ...this.props.loggedInUser },
-      email: this.props.loggedInUser.email,
-      loadingFlag: false
-    });
+    console.log(this.props.loggedInUser.id);
+    this.userService
+      .getUserByIdShallow(this.props.loggedInUser.id)
+      .then(user => {
+        this.setState({
+          ...this.state,
+          user: { ...user },
+          email: user.email,
+          loadingFlag: false
+        });
+      });
   }
   render() {
     const { user } = this.state;
@@ -83,7 +88,8 @@ export default class Profile extends Component {
                   flavour="signup"
                 />
                 <label htmlFor="email">User email</label>
-                <input className="big-input"
+                <input
+                  className="big-input"
                   type="email"
                   name="email"
                   value={this.state.email}
@@ -92,21 +98,24 @@ export default class Profile extends Component {
                 />
                 <p>If you want to change your password</p>
                 <label htmlFor="current-pass">Enter current password</label>
-                <input className="small-input"
+                <input
+                  className="small-input"
                   type="password"
                   name="current_pass"
                   id="current-pass"
                   onChange={this.handleChange}
                 />
                 <label htmlFor="new-pass">Enter new password</label>
-                <input className="small-input"
+                <input
+                  className="small-input"
                   type="password"
                   name="new_pass"
                   id="new-pass"
                   onChange={this.handleChange}
                 />
                 <label htmlFor="repeat-pass">Repeat new password</label>
-                <input className="small-input"
+                <input
+                  className="small-input"
                   type="password"
                   name="repeat_pass"
                   id="repeat-pass"
