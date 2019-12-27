@@ -11,13 +11,13 @@ const ensureLogin = require("connect-ensure-login");
 router.post('/signup', (req, res, next) => {
   const { username, password, picture } = req.body
   
-
+  
   if (!username || !password) {
     res.status(400).json({ message: 'Provide username and password' });
     return;
   }
 
-  if (password.length < 8) {
+  if (password.length < 1) {
     res.status(400).json({ message: 'Please make your password at least 8 characters long for security purposes.' });
     return;
   }
