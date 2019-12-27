@@ -27,15 +27,11 @@ const StyledSignup = styled.div`
       padding: 10px;
       margin: .5rem;
       box-sizing: border-box;
-      input {
-        color: ${colors.white};
-        font-size: 1.2rem;
-        font-weight: 600;
-      }
     }
     .btn-green {
       background: ${colors.green};
       border: 1px solid ${colors.white};
+      color: ${colors.white};
     }
 
     .btn-red {
@@ -110,8 +106,8 @@ const Signup = props => {
       />
       {error && <StyledError>{error}</StyledError>}
       <div className={"button-box"}>
-        <button className={"btn-green"}>
-          <input type="submit" value="Create User" />
+        <button className={"btn-green"} type="submit">
+          Create user
         </button>
         <Link to={{pathname:"/login"}}>
           <button className={"btn-red"}>Cancel</button>

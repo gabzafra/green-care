@@ -54,24 +54,6 @@ export default class SignUp extends Component {
             placeholder={"User name"}
             error={error}
           ></Signup>
-          {/* <label htmlFor="username">Username: </label>
-          <input
-            type="text"
-            name="username"
-            value={username}
-            required
-            onChange={this.handleChange}
-          />
-          <label htmlFor="password">Password: </label>
-          <input
-            type="password"
-            value={password}
-            name="password"
-            required
-            onChange={this.handleChange}
-          />
-          <input type="file" name="picture" onChange={this.handleUpload} />
-          <input type="submit" value="Create account" /> */}
         </form>
       </React.Fragment>
     );
