@@ -1,5 +1,4 @@
 class GeoService {
-    constructor() {}
     calcDistance = (lat1, lng1, lat2, lng2) => {
         const R = 6371; // earth radius in km
         let dLat = this.toRad(lat2 - lat1);

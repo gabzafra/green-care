@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import colors from "../globalStyles/colors";
-import { Link } from "react-router-dom";
 
 const StyledButton = styled.button`
         border: none;

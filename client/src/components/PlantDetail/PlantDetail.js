@@ -193,14 +193,7 @@ export default class PlantDetail extends Component {
 
   createNewPlant(user) {
     let locationArr = [40.392351, -3.696842];
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position =>
-        doCreate([position.coords.latitude, position.coords.longitude])
-      );
-    } else {
-      doCreate(locationArr);
-    }
-
+    
     const doCreate = currentPosition => {
       let newTasks = [
         {
@@ -265,6 +258,16 @@ export default class PlantDetail extends Component {
         })
         .catch(error => console.error(error));
     };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position =>
+        doCreate([position.coords.latitude, position.coords.longitude])
+      );
+    } else {
+      doCreate(locationArr);
+    }
+
+    
   }
 
   deleteHandle = e => {
