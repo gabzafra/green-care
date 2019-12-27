@@ -44,8 +44,8 @@ router.put("/update", (req, res, next) => {
 });
 
 router.put("/update-profile", (req, res, next) => {
-  const { id, email, current_pass, new_pass, repeat_pass } = req.body;
-  let newUser = {email:email};
+  const { id, current_pass, new_pass, repeat_pass } = req.body;
+  let newUser = {...req.body};
   User.findById(id)
     .then(oldUser => {
       if (current_pass !== new_pass && new_pass === repeat_pass) {
