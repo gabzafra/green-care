@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Label = styled.label`
-  font-size: 1.8rem;
+  font-size: 1rem;
   align-self: flex-start;
   margin-left: 1rem;  
 `;
