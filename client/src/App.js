@@ -9,7 +9,8 @@ import PlantDetail from "./components/PlantDetail/PlantDetail";
 import AuthService from "./services/AuthService";
 import PrivateRoute from "./guards/PrivateRoute";
 import GoogleMap from "./components/GmapsPlaces/GmapsPlaces";
-import UserDetail from "./components/UserDetail/UserDetail"
+import UserDetail from "./components/UserDetail/UserDetail";
+import Calendar from "./components/Calendar/Calendar";
 
 class App extends React.Component {
   constructor(props) {
@@ -79,6 +80,7 @@ class App extends React.Component {
             <PrivateRoute exact path="/profile" user={user} component={Profile} logoutHandler={this.logout} />
             <PrivateRoute exact path="/plants-map" user={user} component={GoogleMap} logoutHandler={this.logout} />
             <PrivateRoute exact path="/user-detail" user={user} component={UserDetail} logoutHandler={this.logout} />
+            <PrivateRoute exact path="/calendar" user={user} component={Calendar} logoutHandler={this.logout} />
           </Switch>
         )}
         {!user && (

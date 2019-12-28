@@ -1,0 +1,21 @@
+header {
+    display: flex;
+    align-items: center;
+    padding-right: 1rem;
+}
+
+.close-btn {
+  cursor: pointer;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 10vw;
+  height: 10vw;
+  padding-top: .5rem;
+}
+
+.title-box {
+    width: 80vw;
+}

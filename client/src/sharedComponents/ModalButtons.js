@@ -42,12 +42,8 @@ const BtnWrapper = styled.div`
   }
 `;
 
-
-
 const Buttons = props => {
-  const { updateHandler, flavour,sourceUserId, goBackHandler } = props;
-  
-  console.log(sourceUserId);
+  const { updateHandler, flavour, sourceUserId, goBackHandler } = props;
   return (
     <BtnWrapper>
       {(() => {
@@ -56,7 +52,10 @@ const Buttons = props => {
             return (
               <React.Fragment>
                 {sourceUserId ? (
-                  <GenericBtn className="btn-red" onClick={e=>goBackHandler(e,sourceUserId)}>
+                  <GenericBtn
+                    className="btn-red"
+                    onClick={e => goBackHandler(e, sourceUserId)}
+                  >
                     Go back
                   </GenericBtn>
                 ) : (
@@ -94,7 +93,13 @@ const Buttons = props => {
           case "main":
             return (
               <React.Fragment>
-                <StyledButton img={"../images/calendar_w.svg"} />
+                <Link to={{ pathname: `/calendar` }}>
+                  <StyledButton
+                    img={"../images/calendar_w.svg"}
+                    clicked={() => ""}
+                  />
+                </Link>
+
                 <Link
                   to={{
                     pathname: `/plant/new`,
