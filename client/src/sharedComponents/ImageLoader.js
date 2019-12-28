@@ -20,7 +20,6 @@ const PlantPortrait = styled.img`
 
 const Loader = props => {
   const { picture, handleUpload, flavour, size } = props;
-  console.log(size);
   return (
     <React.Fragment>
       {flavour !== "readonly" ? (

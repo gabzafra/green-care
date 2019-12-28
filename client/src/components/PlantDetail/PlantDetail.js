@@ -59,10 +59,10 @@ export default class PlantDetail extends Component {
   };
 
   handleLocChange = coords => {
-    const {lat,lng} = coords;
-    console.log(coords)
-    this.setState({...this.state, lat:lat,lng: lng})
-  }
+    const { lat, lng } = coords;
+    console.log(coords);
+    this.setState({ ...this.state, lat: lat, lng: lng });
+  };
 
   toggleInfo = e => {
     e.preventDefault();
@@ -76,7 +76,7 @@ export default class PlantDetail extends Component {
 
   logPlant = name => {
     console.log(this.trefService.getByName(name));
-  }
+  };
 
   handleUpload = e => {
     const uploadData = new FormData();
@@ -106,7 +106,7 @@ export default class PlantDetail extends Component {
       name: this.state.name,
       location: {
         type: "Point",
-        coordinates: [this.state.lat,this.state.lng]
+        coordinates: [this.state.lat, this.state.lng]
       }
     };
     let tasks = this.state.plant.tasks.filter(task => task);
@@ -123,14 +123,14 @@ export default class PlantDetail extends Component {
         .updatePlant(plant)
         .then(() => {
           tasks.forEach(task => this.taskService.updateTask(task));
-        }).then(() =>{
+        })
+        .then(() => {
           let user = this.props.loggedInUser;
           console.log(user);
-          user.locations.push([this.state.lat,this.state.lng]);
+          user.locations.push([this.state.lat, this.state.lng]);
           user.locations = this.geoService.getUserLocationArr(user.locations);
           console.log(user);
-          return this.userService.updateUser(user)
-          
+          return this.userService.updateUser(user);
         })
         .then(() => history.push("/main"));
     } else {
@@ -154,15 +154,15 @@ export default class PlantDetail extends Component {
           plant.tasks = [tasks[0].id, tasks[1].id];
           return this.plantService.updatePlant(plant);
         })
-        .then(() =>{
+        .then(() => {
           let user = this.props.loggedInUser;
           console.log(user);
-          user.locations.push([this.state.lat,this.state.lng]);
+          user.locations.push([this.state.lat, this.state.lng]);
           user.locations = this.geoService.getUserLocationArr(user.locations);
           console.log(user);
-          return this.userService.updateUser(user)
-          
-        }).then(()=>history.push("/main"));
+          return this.userService.updateUser(user);
+        })
+        .then(() => history.push("/main"));
     }
   };
 
@@ -193,7 +193,7 @@ export default class PlantDetail extends Component {
 
   createNewPlant(user) {
     let locationArr = [40.392351, -3.696842];
-    
+
     const doCreate = currentPosition => {
       let newTasks = [
         {
@@ -266,8 +266,6 @@ export default class PlantDetail extends Component {
     } else {
       doCreate(locationArr);
     }
-
-    
   }
 
   deleteHandle = e => {
@@ -297,6 +295,14 @@ export default class PlantDetail extends Component {
       .catch(error => console.error(error));
   };
 
+  goBack = (e,id) => {
+    e.preventDefault();
+    this.props.history.push({
+      pathname: "/user-detail",
+      state: { id: id }
+    });
+  };
+
   componentDidMount() {
     this.logPlant("Canadian serviceberry");
     if (this.props.location.state.flavour === "create") {
@@ -308,6 +314,7 @@ export default class PlantDetail extends Component {
 
   render() {
     const { flavour, plant, name, common_name } = this.state;
+    const { sourceUserId } = this.props.location.state;
     return (
       <React.Fragment>
         {this.state.plant && (
@@ -358,8 +365,18 @@ export default class PlantDetail extends Component {
 
                 {this.state.mapToggle && (
                   <div className="map-wrapper">
-                      <GmapsMap className="map" lat={this.state.lat} lng={this.state.lng} picture={this.state.plant.picture} handleChange={this.handleLocChange}/>
-                      <button className="map-btn" onClick={this.toggleMap} style={{ backgroundImage: "url(" + InnerBgImg +")" }}></button>
+                    <GmapsMap
+                      className="map"
+                      lat={this.state.lat}
+                      lng={this.state.lng}
+                      picture={this.state.plant.picture}
+                      handleChange={this.handleLocChange}
+                    />
+                    <button
+                      className="map-btn"
+                      onClick={this.toggleMap}
+                      style={{ backgroundImage: "url(" + InnerBgImg + ")" }}
+                    ></button>
                   </div>
                 )}
 
@@ -399,10 +416,12 @@ export default class PlantDetail extends Component {
                       img="../images/info_w.svg"
                       clicked={this.toggleInfo}
                     />
-                    <StyledButton
-                      img="../images/trash_b_w.svg"
-                      clicked={this.deleteHandle}
-                    />
+                    {flavour !== "readonly" && (
+                      <StyledButton
+                        img="../images/trash_b_w.svg"
+                        clicked={this.deleteHandle}
+                      />
+                    )}
                   </ButtonsWrapper>
 
                   <FormRange
@@ -427,6 +446,8 @@ export default class PlantDetail extends Component {
                 <ModalButtons
                   flavour={flavour}
                   updateHandler={this.handleUpdate}
+                  sourceUserId={sourceUserId}
+                  goBackHandler={this.goBack}
                 />
               </React.Fragment>
             )}

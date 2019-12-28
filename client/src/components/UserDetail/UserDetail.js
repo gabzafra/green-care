@@ -5,6 +5,7 @@ import userService from "../../services/UserService";
 import capitalize from "../../globalStyles/utils";
 import LoadingOverlay from "../../sharedComponents/LoadingOverlay";
 import "./UserDetail.css";
+import { Link } from "react-router-dom";
 
 export default class UserDetail extends Component {
   constructor(props) {
@@ -33,8 +34,12 @@ export default class UserDetail extends Component {
         });
       });
   }
+
+  
+
   render() {
     const { name, email, picture, plants } = this.state;
+    const userId = this.props.location.state.id;
     return (
       <React.Fragment>
         {this.state.loadingFlag ? (
@@ -42,27 +47,38 @@ export default class UserDetail extends Component {
         ) : (
           plants && (
             <div className="big-div">
-              <h1 >{capitalize(name)}</h1>
+              <h1>{capitalize(name)}</h1>
               <ImageLoader
                 picture={picture}
                 handleUpload={() => ""}
                 flavour="readonly"
               />
               <h2 className="email-row">{email}</h2>
-              <div className="small-div" >
-                {plants.splice(0,3).map((plant, idx) => (
-                <ImageLoader
+              <div className="small-div">
+                {plants.splice(0, 3).map((plant, idx) => (
+                  <Link
                   key={idx}
-                  picture={(plant.picture)}
-                  handleUpload={() => ""}
-                  flavour="readonly"
-                  size="120"
-                />
-              ))}
+                    to={{
+                      pathname: `/plant-detail/${plant.id}`,
+                      state: {
+                        flavour: "readonly",
+                        sourceUserId: `${userId}`
+                      }
+                    }}
+                  >
+                    <ImageLoader               
+                      picture={plant.picture}
+                      handleUpload={() => ""}
+                      flavour="readonly"
+                      size="120"
+                    />
+                  </Link>
+                ))}
               </div>
-              
-
-              <ModalButtons updateHandler={() => ""} flavour="readonly" />
+              <ModalButtons
+                updateHandler={() => ""}
+                flavour="readonly"
+              />
             </div>
           )
         )}

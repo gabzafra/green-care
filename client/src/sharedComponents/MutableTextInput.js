@@ -22,7 +22,7 @@ const StaticField = styled.p`
   background-color: ${colors.green};
   font-family: "Encode Sans"; 
   font-size: 1.7rem;
-  padding: 1rem;
+  padding-bottom: .5rem;
 `;
 
 const Input = props => {

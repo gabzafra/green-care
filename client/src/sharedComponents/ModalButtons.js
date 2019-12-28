@@ -42,17 +42,29 @@ const BtnWrapper = styled.div`
   }
 `;
 
+
+
 const Buttons = props => {
-  const { updateHandler, flavour } = props;
+  const { updateHandler, flavour,sourceUserId, goBackHandler } = props;
+  
+  console.log(sourceUserId);
   return (
     <BtnWrapper>
       {(() => {
         switch (flavour) {
           case "readonly":
             return (
-              <Link to={{ pathname: `/main` }}>
-                <GenericBtn className="btn-red">Go back</GenericBtn>
-              </Link>
+              <React.Fragment>
+                {sourceUserId ? (
+                  <GenericBtn className="btn-red" onClick={e=>goBackHandler(e,sourceUserId)}>
+                    Go back
+                  </GenericBtn>
+                ) : (
+                  <Link to={{ pathname: `/main` }}>
+                    <GenericBtn className="btn-red">Go back</GenericBtn>
+                  </Link>
+                )}
+              </React.Fragment>
             );
           case "update":
             return (
@@ -99,7 +111,10 @@ const Buttons = props => {
                     pathname: `/plants-map`
                   }}
                 >
-                  <StyledButton img={"../images/map_w.svg"} clicked={()=>""} />
+                  <StyledButton
+                    img={"../images/map_w.svg"}
+                    clicked={() => ""}
+                  />
                 </Link>
               </React.Fragment>
             );
