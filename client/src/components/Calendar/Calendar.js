@@ -3,12 +3,16 @@ import PageTitle from "../../sharedComponents/PageTitle";
 import userService from "../../services/UserService";
 import InnerBgImg from "./close_w.svg";
 import "./Calendar.css";
+import moment from "moment";
 
 export default class Calendar extends Component {
 
     constructor(props) {
         super(props);
     this.userService = new userService();
+    this.state = {
+      currentDate : moment()
+    }
     }
 
     componentWillMount() {
@@ -31,7 +35,7 @@ export default class Calendar extends Component {
             style={{ backgroundImage: "url(" + InnerBgImg + ")" }}
           ></button>
         </header>
-        <h1>{this.props.loggedInUser.id}</h1>
+        {this.state.user && <h1>{moment(this.state.user.plants[0].tasks[0].begin_day).add(1,"days").format("dd")}</h1>}   
       </div>
     );
   }
