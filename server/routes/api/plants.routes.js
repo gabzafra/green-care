@@ -17,6 +17,7 @@ router.get("/user/:id", (req, res, next) => {
   const { id } = req.params;
   User.findById(id)
     .populate("plants")
+    .populate("tasks")
     .then(foundUser => res.status(200).json(foundUser.plants))
     .catch(err => res.status(500).json(err));
 });
