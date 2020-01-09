@@ -1,0 +1,18 @@
+.day-container {
+    background-color: #fff;
+    height: 5rem;
+    border-bottom: 1px solid #6AA76F;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem;
+}
+
+.day-slug {
+    color: #6AA76F;
+    font-size: 2rem;
+}
+
+.weather-icon {
+    height: 50px;
+}
