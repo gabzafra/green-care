@@ -4,6 +4,7 @@ import userService from "../../services/UserService";
 import InnerBgImg from "./close_w.svg";
 import "./Calendar.css";
 import moment from "moment";
+import CalendarDay from "../CalendarDay/CalendarDay";
 
 export default class Calendar extends Component {
 
@@ -15,7 +16,7 @@ export default class Calendar extends Component {
     }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.userService.getUserByIdDeep(this.props.loggedInUser.id).then(user =>
           this.setState({
             ...this.state,
@@ -36,6 +37,7 @@ export default class Calendar extends Component {
           ></button>
         </header>
         {this.state.user && <h1>{moment(this.state.user.plants[0].tasks[0].begin_day).add(1,"days").format("dd")}</h1>}   
+        <CalendarDay daySlug={"S"} weatherIcon={}></CalendarDay>
       </div>
     );
   }

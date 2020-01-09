@@ -60,7 +60,6 @@ export default class PlantDetail extends Component {
 
   handleLocChange = coords => {
     const { lat, lng } = coords;
-    console.log(coords);
     this.setState({ ...this.state, lat: lat, lng: lng });
   };
 
@@ -126,10 +125,8 @@ export default class PlantDetail extends Component {
         })
         .then(() => {
           let user = this.props.loggedInUser;
-          console.log(user);
           user.locations.push([this.state.lat, this.state.lng]);
           user.locations = this.geoService.getUserLocationArr(user.locations);
-          console.log(user);
           return this.userService.updateUser(user);
         })
         .then(() => history.push("/main"));

@@ -22,7 +22,7 @@ class GmapsMap extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.userService.getUsers().then(users =>
       this.setState({
         ...this.state,
