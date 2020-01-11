@@ -19,19 +19,36 @@ export default class Calendar extends Component {
   }
 
   componentDidMount() {
-    let forecast = null;
-   this.calendarService.tryMe(40.423,-3.71).then(res=>{
-     forecast = res.data;
-     return this.userService.getUserByIdDeep(this.props.loggedInUser.id).then(user =>
+    if (this.props.loggedInUser.locations.length > 0) {
+      let forecast = null;
+      this.calendarService
+        .getForecast(
+          this.props.loggedInUser.locations[0][0],
+          this.props.loggedInUser.locations[0][1]
+        )
+        .then(res => {
+          forecast = res.data.map(day => ({
+            date: day.valid_date,
+            icon: this.calendarService.getIcon(day.weather.code)
+          }));
+          return this.userService
+            .getUserByIdDeep(this.props.loggedInUser.id)
+            .then(user =>
+              this.setState({
+                ...this.state,
+                user: user,
+                loadingFlag: false,
+                emptyCalendar: false,
+                forecast: forecast
+              })
+            );
+        });
+    } else {
       this.setState({
         ...this.state,
-        user: user,
-        loadingFlag: false,
-        forecast: forecast
-      })
-    );
-   })
-    
+        emptyCalendar: true
+      });
+    }
   }
 
   render() {
@@ -46,6 +63,9 @@ export default class Calendar extends Component {
             ></button>
           </Link>
         </header>
+        {this.state.emptyCalendar && (
+          <h1>You have no plants yet, go back and add some !</h1>
+        )}
         {this.state.user && (
           <React.Fragment>
             <CalendarDay
