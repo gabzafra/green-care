@@ -5,11 +5,12 @@ class CalendarService {
         this.instance = axios.create({
           baseURL: `${process.env.REACT_APP_WEATHER_URL}?token=${process.env.REACT_APP_WEATHER_TOKEN}`,
           withCredentials: true,
+          'Content-Type': 'application/json'
         });
       }
       tryMe = (lat,lng)=> {
         return this.instance
-          .get(`&lat=${lat}&lon=${lng}`)
+          .get(`daily?&lat=${lat}&lon=${lng}`)
           .then(res => Promise.resolve(res.data))
           .catch(error => console.error(error));
       };
