@@ -59,7 +59,6 @@ export default class Profile extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.loggedInUser.id);
     this.userService
       .getUserByIdShallow(this.props.loggedInUser.id)
       .then(user => {

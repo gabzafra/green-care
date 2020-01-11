@@ -242,7 +242,6 @@ export default class PlantDetail extends Component {
         })
         .then(() => this.plantService.getPlantById(newPlant.id))
         .then(createdPlant => {
-          console.log(createdPlant);
           this.setState({
             ...this.state,
             plant: { ...createdPlant },
