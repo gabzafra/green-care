@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PageTitle from "../../sharedComponents/PageTitle";
 import userService from "../../services/UserService";
+import calendarService from "../../services/CalendarService";
 import InnerBgImg from "./close_w.svg";
 import "./Calendar.css";
 import moment from "moment";
@@ -11,19 +12,24 @@ export default class Calendar extends Component {
   constructor(props) {
     super(props);
     this.userService = new userService();
+    this.calendarService = new calendarService();
     this.state = {
       currentDate: moment()
     };
   }
 
   componentDidMount() {
-    this.userService.getUserByIdDeep(this.props.loggedInUser.id).then(user =>
+   this.calendarService.tryMe(40.423,-3.71).then(test=>{
+     console.log(test)
+     return this.userService.getUserByIdDeep(this.props.loggedInUser.id).then(user =>
       this.setState({
         ...this.state,
         user: user,
         loadingFlag: false
       })
     );
+   })
+    
   }
 
   render() {

@@ -3,7 +3,7 @@ import axios from "axios";
 class TrefService {
   constructor() {
     this.instance = axios.create({
-      baseURL: `${process.env.REACT_APP_TREF_URL}?token=YOUR-TOKEN/`,
+      baseURL: `${process.env.REACT_APP_TREF_URL}?token=${process.env.REACT_APP_TREF_TOKEN}/`,
       withCredentials: true
     });
   }
