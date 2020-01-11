@@ -45,48 +45,18 @@ export default class Calendar extends Component {
                 .add(2, "days")
                 .format("dd")}
               weatherIcon={"./images/cloud.svg"}
-            ></CalendarDay>
-            <CalendarDay
-              daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
-                .add(3, "days")
-                .format("dd")}
-              weatherIcon={"./images/sun.svg"}
-            ></CalendarDay>
-            <CalendarDay
-              daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
-                .add(4, "days")
-                .format("dd")}
-              weatherIcon={"./images/rain.svg"}
-            ></CalendarDay>
-            <CalendarDay
-              daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
-                .add(5, "days")
-                .format("dd")}
-              weatherIcon={"./images/snowflake.svg"}
-            ></CalendarDay>
-            <CalendarDay
-              daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
-                .add(2, "days")
-                .format("dd")}
-              weatherIcon={"./images/cloud.svg"}
-            ></CalendarDay>
-            <CalendarDay
-              daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
-                .add(3, "days")
-                .format("dd")}
-              weatherIcon={"./images/sun.svg"}
-            ></CalendarDay>
-            <CalendarDay
-              daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
-                .add(4, "days")
-                .format("dd")}
-              weatherIcon={"./images/rain.svg"}
-            ></CalendarDay>
-            <CalendarDay
-              daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
-                .add(5, "days")
-                .format("dd")}
-              weatherIcon={"./images/snowflake.svg"}
+              plantList={[
+                [
+                  "5e07724c9229495a1e30fa6e",
+                  "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
+                  "blue"
+                ],
+                [
+                  "5e07724c9229495a1e30fa6e",
+                  "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
+                  "red"
+                ]
+              ]}
             ></CalendarDay>
           </React.Fragment>
         )}
