@@ -19,13 +19,15 @@ export default class Calendar extends Component {
   }
 
   componentDidMount() {
-   this.calendarService.tryMe(40.423,-3.71).then(test=>{
-     console.log(test)
+    let forecast = null;
+   this.calendarService.tryMe(40.423,-3.71).then(res=>{
+     forecast = res.data;
      return this.userService.getUserByIdDeep(this.props.loggedInUser.id).then(user =>
       this.setState({
         ...this.state,
         user: user,
-        loadingFlag: false
+        loadingFlag: false,
+        forecast: forecast
       })
     );
    })
