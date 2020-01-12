@@ -7,6 +7,7 @@ import "./Calendar.css";
 import moment from "moment";
 import CalendarDay from "../CalendarDay/CalendarDay";
 import { Link } from "react-router-dom";
+import LoadingOverlay from "../../sharedComponents/LoadingOverlay";
 
 export default class Calendar extends Component {
   constructor(props) {
@@ -14,11 +15,12 @@ export default class Calendar extends Component {
     this.userService = new userService();
     this.calendarService = new calendarService();
     this.state = {
-      currentDate: moment()
+      loadingFlag: true,
+      emptyCalendar: true
     };
   }
 
-  
+  getDaysArray = () => {};
 
   componentDidMount() {
     if (this.props.loggedInUser.locations.length > 0) {
@@ -45,52 +47,53 @@ export default class Calendar extends Component {
               })
             );
         });
-    } else {
-      this.setState({
-        ...this.state,
-        emptyCalendar: true
-      });
     }
   }
 
   render() {
     return (
-      <div>
-        <header>
-          <PageTitle className="title-box" />
-          <Link to={{ pathname: "/main" }}>
-            <button
-              className="close-btn"
-              style={{ backgroundImage: "url(" + InnerBgImg + ")" }}
-            ></button>
-          </Link>
-        </header>
-        {this.state.emptyCalendar && (
-          <h1>You have no plants yet, go back and add some !</h1>
+      <React.Fragment>
+        {this.state.loadingFlag ? (
+          <LoadingOverlay />
+        ) : (
+          <div>
+            <header>
+              <PageTitle className="title-box" />
+              <Link to={{ pathname: "/main" }}>
+                <button
+                  className="close-btn"
+                  style={{ backgroundImage: "url(" + InnerBgImg + ")" }}
+                ></button>
+              </Link>
+            </header>
+            {this.state.emptyCalendar && (
+              <h1>You have no plants yet, go back and add some !</h1>
+            )}
+            {this.state.user && (
+              <React.Fragment>
+                <CalendarDay
+                  daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
+                    .add(2, "days")
+                    .format("dd")}
+                  weatherIcon={"./images/cloud.svg"}
+                  plantList={[
+                    [
+                      "5e1acc411d756eca3a6e0d26",
+                      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
+                      "blue"
+                    ],
+                    [
+                      "5e1acc411d756eca3a6e0d26",
+                      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
+                      "red"
+                    ]
+                  ]}
+                ></CalendarDay>
+              </React.Fragment>
+            )}
+          </div>
         )}
-        {this.state.user && (
-          <React.Fragment>
-            <CalendarDay
-              daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
-                .add(2, "days")
-                .format("dd")}
-              weatherIcon={"./images/cloud.svg"}
-              plantList={[
-                [
-                  "5e1acc411d756eca3a6e0d26",
-                  "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
-                  "blue"
-                ],
-                [
-                  "5e1acc411d756eca3a6e0d26",
-                  "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
-                  "red"
-                ]
-              ]}
-            ></CalendarDay>
-          </React.Fragment>
-        )}
-      </div>
+      </React.Fragment>
     );
   }
 }
