@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Plant = require("../models/Plant");
 const Task = require("../models/Task");
+const moment = require("moment");
 const randomInt = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
 const randomFloat = (min, max) => Math.random() * (max - min) + min;
@@ -60,8 +61,8 @@ let tasks = Array(12)
   .map(() => {
     flip = !flip;
     return {
-      begin_day: new Date(),
-      day_interval: randomInt(1, 7),
+      begin_day: new moment().subtract(randomInt(7, 999), 'days'),
+      day_interval: randomInt(1, 22),
       type: flip ? "WATER" : "FERTILIZER"
     };
   });
