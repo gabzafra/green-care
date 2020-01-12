@@ -18,6 +18,8 @@ export default class Calendar extends Component {
     };
   }
 
+  
+
   componentDidMount() {
     if (this.props.loggedInUser.locations.length > 0) {
       let forecast = null;
@@ -75,12 +77,12 @@ export default class Calendar extends Component {
               weatherIcon={"./images/cloud.svg"}
               plantList={[
                 [
-                  "5e07724c9229495a1e30fa6e",
+                  "5e1acc411d756eca3a6e0d26",
                   "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
                   "blue"
                 ],
                 [
-                  "5e07724c9229495a1e30fa6e",
+                  "5e1acc411d756eca3a6e0d26",
                   "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
                   "red"
                 ]

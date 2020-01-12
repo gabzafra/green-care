@@ -1,4 +1,6 @@
 import axios from "axios";
+import moment from "moment";
+import "moment-recur";
 
 class CalendarService {
   constructor() {
@@ -6,6 +8,28 @@ class CalendarService {
       baseURL: `${process.env.REACT_APP_WEATHER_URL}`
     });
   }
+
+  getDaysWithTask = (initialDay, currentDay, taskInterval, numberOfDays) => {
+    let daysWithTask = [];
+    const initialDate = moment(initialDay);
+    const currentDate = moment(currentDay);
+
+    if (
+      initialDate.isValid() &&
+      currentDate.isValid() &&
+      taskInterval > 0 &&
+      numberOfDays > 0
+    ) {
+      const recurrence = moment().recur(
+        initialDate,
+        moment(currentDate).add(numberOfDays, "days")
+      );
+      recurrence.every(taskInterval, "days");
+      daysWithTask = recurrence.fromDate(currentDate).all("YYYY-MM-DD");
+    }
+
+    return daysWithTask;
+  };
 
   getForecast = (lat, lng) => {
     return this.instance
