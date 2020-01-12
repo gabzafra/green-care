@@ -73,10 +73,6 @@ export default class PlantDetail extends Component {
     this.setState({ ...this.state, mapToggle: !this.state.mapToggle });
   };
 
-  logPlant = name => {
-    console.log(this.trefService.getByName(name));
-  };
-
   handleUpload = e => {
     const uploadData = new FormData();
     uploadData.append("picture", e.target.files[0]);
@@ -98,6 +94,7 @@ export default class PlantDetail extends Component {
 
   handleUpdate = e => {
     e.preventDefault();
+
     const { history } = this.props;
     let plant = {
       ...this.state.plant,
@@ -109,6 +106,54 @@ export default class PlantDetail extends Component {
       }
     };
     let tasks = this.state.plant.tasks.filter(task => task);
+
+    let updatePlantFromApi = plant => {
+      return this.trefService
+        .getByName(plant.common_name)
+        .then(res => {
+          return this.trefService.getById(res[0].id);
+        })
+        .then(apiData => {
+          plant.scientific_name = apiData.scientific_name || "";
+          let soilsArr = Object.entries(apiData.main_species.soils_adaptation);
+          plant.soils_adaptation =
+            soilsArr
+              .reduce((acc, pair) => {
+                pair[1] && acc.push(pair[0]);
+                return acc;
+              }, [])
+              .join(",") || "unknow";
+          plant.temperature_minimun =
+            Math.round(apiData.main_species.growth.temperature_minimum.deg_c) ||
+            "";
+          plant.shade_tolerance =
+            apiData.main_species.growth.shade_tolerance || "";
+          plant.year_rain_range =
+            `${Math.round(
+              apiData.main_species.growth.precipitation_minimum.cm
+            )} to ${Math.round(
+              apiData.main_species.growth.precipitation_maximum.cm
+            )} cm` || "";
+          plant.ph_range =
+            `${apiData.main_species.growth.ph_minimum} to ${apiData.main_species.growth.ph_maximum}` ||
+            "";
+          plant.fertilizer_req =
+            apiData.main_species.growth.fertility_requirement || "";
+          plant.perennial = apiData.duration === "Perennial";
+          if (
+            plant.picture === "../images/daisy.jpg" &&
+            apiData.images.length > 0
+          ) {
+            plant.picture = apiData.images[0].url;
+          }
+          return Promise.resolve(plant);
+        })
+        .catch(error => {
+          console.log(error);
+          return Promise.resolve(plant);
+        });
+    };
+
     if (tasks.length > 0) {
       tasks
         .sort((a, b) => a.type - b.type)
@@ -118,8 +163,10 @@ export default class PlantDetail extends Component {
             : (task.day_interval = this.state.fertilizerInterval)
         );
       delete plant.tasks;
-      this.plantService
-        .updatePlant(plant)
+      updatePlantFromApi(plant)
+        .then(res => {
+          return this.plantService.updatePlant(res);
+        })
         .then(() => {
           tasks.forEach(task => this.taskService.updateTask(task));
         })
@@ -291,7 +338,7 @@ export default class PlantDetail extends Component {
       .catch(error => console.error(error));
   };
 
-  goBack = (e,id) => {
+  goBack = (e, id) => {
     e.preventDefault();
     this.props.history.push({
       pathname: "/user-detail",
@@ -300,7 +347,6 @@ export default class PlantDetail extends Component {
   };
 
   componentDidMount() {
-    this.logPlant("Canadian serviceberry");
     if (this.props.location.state.flavour === "create") {
       this.createNewPlant({ ...this.props.loggedInUser });
     } else {

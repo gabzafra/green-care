@@ -42,7 +42,7 @@ app.use(cookieParser());
 //   credentials: true
 // }
 
-const whiteList = [`http://localhost:${process.env.CLIENT_PORT}`, `http://api.weatherbit.io/v2.0/`]
+const whiteList = [`http://localhost:${process.env.CLIENT_PORT}`, `http://api.weatherbit.io/v2.0/`, `https://trefle.io`]
 const corsOptions = {
   origin: (origin, cb) => {
     const originIsWhitelisted = whiteList.includes(origin);
