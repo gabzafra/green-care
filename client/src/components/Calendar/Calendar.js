@@ -20,7 +20,34 @@ export default class Calendar extends Component {
     };
   }
 
-  getDaysArray = () => {};
+  getDaysArray = (days, plants) => {
+    let firstDay = days[0].date;
+    let numberOfDays = days.length;
+    let tasksArr = plants.reduce((arr, plant) => {
+      plant.tasks.forEach(task => {
+        let dateArr = this.calendarService.getDaysWithTask(
+          task.begin_day,
+          firstDay,
+          task.day_interval,
+          numberOfDays
+        );
+        dateArr.forEach(date =>
+          arr.push({
+            date: date,
+            type: task.type === "WATER" ? "blue" : "red",
+            id: plant.id,
+            picture: plant.picture
+          })
+        );
+      });
+      return arr;
+    }, []);
+
+    return days.map(day => {
+      let tasks = tasksArr.filter(e => e.date === day.date).map(task=>[task.id,task.picture,task.type]);
+      return { ...day, tasks: tasks };
+    });
+  };
 
   componentDidMount() {
     if (this.props.loggedInUser.locations.length > 0) {
@@ -37,20 +64,24 @@ export default class Calendar extends Component {
           }));
           return this.userService
             .getUserByIdDeep(this.props.loggedInUser.id)
-            .then(user =>
+            .then(user => {
               this.setState({
                 ...this.state,
                 user: user,
                 loadingFlag: false,
                 emptyCalendar: false,
                 forecast: forecast
-              })
-            );
+              });
+            });
         });
     }
   }
 
   render() {
+    let daysList = null;
+    if (this.state.forecast && this.state.user.plants) {
+      daysList = this.getDaysArray(this.state.forecast, this.state.user.plants);
+    }
     return (
       <React.Fragment>
         {this.state.loadingFlag ? (
@@ -71,24 +102,15 @@ export default class Calendar extends Component {
             )}
             {this.state.user && (
               <React.Fragment>
-                <CalendarDay
-                  daySlug={moment(this.state.user.plants[0].tasks[0].begin_day)
-                    .add(2, "days")
-                    .format("dd")}
-                  weatherIcon={"./images/cloud.svg"}
-                  plantList={[
-                    [
-                      "5e1acc411d756eca3a6e0d26",
-                      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
-                      "blue"
-                    ],
-                    [
-                      "5e1acc411d756eca3a6e0d26",
-                      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Brassica_juncea_var._juncea_3.JPG",
-                      "red"
-                    ]
-                  ]}
-                ></CalendarDay>
+                {daysList &&
+                  daysList.map((day, idx) => (
+                    <CalendarDay
+                      key={idx}
+                      daySlug={moment(day.date).format("dd")}
+                      weatherIcon={`./images/${day.icon}.svg`}
+                      plantList={day.tasks}
+                    ></CalendarDay>
+                  ))}
               </React.Fragment>
             )}
           </div>
