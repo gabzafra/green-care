@@ -22,12 +22,19 @@ export default class Login extends Component {
   }
   handleLogin = (e) => {
     const { setUser, history } = this.props;
+    let apiToken = null;
     e.preventDefault()
-    this.authService.login(this.state)
+    this.authService.getTrefleToken("http://localhost:3000")
+    .then(token=>{
+      apiToken = token;
+      return this.authService.login(this.state)
+    })
     .then(
       (user) => {
-        setUser(user)
-        history.push("/main")
+        user.token = apiToken;
+        console.log(user);
+        setUser(user);
+        history.push("/main");
       },
       (error) => {
         console.error(error)

@@ -6,7 +6,7 @@ const uploader = require('../../configs/cloudinary.config')
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 const ensureLogin = require("connect-ensure-login");
-
+const fetch = require("node-fetch");
 
 router.post('/signup', (req, res, next) => {
   const { username, password, picture } = req.body
@@ -118,5 +118,16 @@ router.post('/upload', uploader.single('picture'), (req, res) => {
     res.status(500).json({ message: 'Something went wrong' });
   }
 })
+
+router.post("/tref", (req, res, next) => {
+  const { url } = req.body;
+  fetch(
+    `${process.env.TREFLE_API_CLAIM_URL}?token=${process.env.TREFLE_API_TOKEN}&origin=${url}`,
+    { method: "POST" }
+  )
+    .then(res => res.json())
+    .then(json => res.status(200).json(json))
+    .catch(err => res.status(500).json(err));
+});
 
 module.exports = router;

@@ -7,6 +7,7 @@ class TrefService {
     });
   }
   //https://trefle.io/api/plants/?token=VlZkR1N3aVRudTVhV1NmSnlUaTNKUT09&common_name=Canadian%20serviceberry
+
   getByName = name => {
     return this.instance
       .get(`?token=${process.env.REACT_APP_TEMP_TOKEN}&common_name=${name}`)
