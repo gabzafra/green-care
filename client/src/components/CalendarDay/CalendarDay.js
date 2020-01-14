@@ -8,9 +8,10 @@ export default class CalendarDay extends Component {
       <div className="day-container">
         <div className="task-wrapper">
           <span className="day-slug">{this.props.daySlug}</span>
-          {this.props.plantList.map((plant, idx) => (
-            <div key={idx} className="links-wrapper">
+          <div  className="links-wrapper">
+            {this.props.plantList.map((plant, idx) => (
               <Link
+                key={idx}
                 to={{
                   pathname: `/plant-update/${plant[0]}`,
                   state: {
@@ -24,8 +25,8 @@ export default class CalendarDay extends Component {
                   alt=""
                 />
               </Link>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         <img className="weather-icon" src={this.props.weatherIcon} alt="" />
       </div>

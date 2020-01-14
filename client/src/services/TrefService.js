@@ -8,16 +8,16 @@ class TrefService {
   }
   //https://trefle.io/api/plants/?token=VlZkR1N3aVRudTVhV1NmSnlUaTNKUT09&common_name=Canadian%20serviceberry
 
-  getByName = name => {
+  getByName = (name,token) => {
     return this.instance
-      .get(`?token=${process.env.REACT_APP_TEMP_TOKEN}&common_name=${name}`)
+      .get(`?token=${token}&common_name=${name}`)
       .then(res => Promise.resolve(res.data))
       .catch(error => console.error(error));
   };
 
-  getById = id => {
+  getById = (id,token) => {
     return this.instance
-      .get(`${id}?token=${process.env.REACT_APP_TEMP_TOKEN}`)
+      .get(`${id}?token=${token}`)
       .then(res => Promise.resolve(res.data))
       .catch(error => console.error(error));
   }

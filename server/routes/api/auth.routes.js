@@ -119,7 +119,7 @@ router.post('/upload', uploader.single('picture'), (req, res) => {
   }
 })
 
-router.post("/tref", (req, res, next) => {
+router.post('/tref', (req, res) => {
   const { url } = req.body;
   fetch(
     `${process.env.TREFLE_API_CLAIM_URL}?token=${process.env.TREFLE_API_TOKEN}&origin=${url}`,

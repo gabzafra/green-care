@@ -1,3 +1,7 @@
+.cards-wrapper {
+    padding-bottom: 15vh;
+}
+
 .fixed-controls {
     position: fixed;
     width: 100vw;   

@@ -8,8 +8,8 @@ class AuthService {
     })
   }
 
-  getTrefleToken = url => {
-    return this.instance.post('/tref', url)
+  getTrefleToken = clientUrl => {
+    return this.instance.post('/tref', {url:clientUrl})
     .then(res => Promise.resolve(res.data))
     .catch(error => console.error(error))
   }

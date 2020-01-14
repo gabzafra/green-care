@@ -109,9 +109,9 @@ export default class PlantDetail extends Component {
 
     let updatePlantFromApi = plant => {
       return this.trefService
-        .getByName(plant.common_name)
+        .getByName(plant.common_name, this.props.loggedInUser.token.token)
         .then(res => {
-          return this.trefService.getById(res[0].id);
+          return this.trefService.getById(res[0].id,this.props.loggedInUser.token.token);
         })
         .then(apiData => {
           plant.scientific_name = apiData.scientific_name || "";

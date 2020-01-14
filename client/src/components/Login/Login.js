@@ -24,7 +24,7 @@ export default class Login extends Component {
     const { setUser, history } = this.props;
     let apiToken = null;
     e.preventDefault()
-    this.authService.getTrefleToken("http://localhost:3000")
+    this.authService.getTrefleToken(process.env.REACT_APP_LOCAL_URL)
     .then(token=>{
       apiToken = token;
       return this.authService.login(this.state)
