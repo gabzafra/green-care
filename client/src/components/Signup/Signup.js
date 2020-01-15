@@ -27,9 +27,8 @@ export default class SignUp extends Component {
       const { history, setUser } = this.props;
       this.authService.signup(this.state).then(
         user => {
-          console.log(user)
           setUser(user);
-          history.push("/main");
+          history.push("/login");
         },
         error => {
           this.setState({ ...this.state, error: error });

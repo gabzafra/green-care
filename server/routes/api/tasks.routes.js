@@ -4,7 +4,7 @@ const Plant = require("../../models/Plant");
 const Task = require("../../models/Task");
 const uploader = require('../../configs/cloudinary.config')
 
-router.post("/create", (req, res, next) => {
+router.post("/create", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   let newTaskInfo;
   const { plantId, begin_day, day_interval, type} = req.body;
   const newTask = new Task({
@@ -21,19 +21,19 @@ router.post("/create", (req, res, next) => {
   .catch(err => res.status(500).json(err)) 
 });
 
-router.post("/multicreate", (req, res, next) => {
+router.post("/multicreate", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   Task.create(req.body)
   .then(newPlant=>res.status(200).json(newPlant))
   .catch(err=>res.status(500).json(err))
 });
 
-router.put("/update", (req, res, next) => {
+router.put("/update", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   Task.findByIdAndUpdate(req.body.id, req.body)
   .then(newPlant=>res.status(200).json(newPlant))
   .catch(err=>res.status(500).json(err))
 });
 
-router.delete("/delete/task", (req, res, next) => {
+router.delete("/delete/task", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const { plantId, id } = req.body;
   Plant.findByIdAndUpdate(plantId,{$pull: { tasks: taskId }})
   .then(() => Task.findByIdAndDelete(taskId))

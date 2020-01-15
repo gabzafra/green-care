@@ -13,8 +13,8 @@ export default class Login extends Component {
   }
 
   state = {
-    username: 'bob',
-    password: 'b'
+    username: '',
+    password: ''
   }
   handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +31,7 @@ export default class Login extends Component {
     })
     .then(
       (user) => {
-        user.token = apiToken;
+        user && (user.token = apiToken);
         setUser(user);
         history.push("/main");
       },

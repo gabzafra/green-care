@@ -23,13 +23,13 @@ class AuthService {
   login = (user) => {
     return this.instance.post('/login', user)
     .then(res => Promise.resolve(res.data))
-    .catch(error => console.error(error))
+    .catch(error => {/*console.error(error)*/})
   }
 
   loggedInUser = () => {
     return this.instance.get('/loggedin')
     .then(res => Promise.resolve(res.data))
-    .catch(error => console.error(error))
+    .catch(error => {/*console.error(error)*/})
   }
 
   logout = () => {

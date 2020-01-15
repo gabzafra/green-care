@@ -5,7 +5,7 @@ const uploader = require("../../configs/cloudinary.config");
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
-router.get("/deep/:id", (req, res, next) => {
+router.get("/deep/:id", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const { id } = req.params;
   User.findById(id)
     .populate({
@@ -22,20 +22,20 @@ router.get("/deep/:id", (req, res, next) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.get("/all", (req, res, next) => {
+router.get("/all", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   User.find()
     .then(foundUsers => res.status(200).json(foundUsers))
     .catch(err => res.status(500).json(err));
 });
 
-router.get("/shallow/:id", (req, res, next) => {
+router.get("/shallow/:id", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const { id } = req.params;
   User.findById(id)
     .then(foundUser => res.status(200).json(foundUser))
     .catch(err => res.status(500).json(err));
 });
 
-router.put("/update", (req, res, next) => {
+router.put("/update", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const { id } = req.body;
   console.log(req.body.plants);
   User.findByIdAndUpdate(id, req.body)
@@ -43,7 +43,7 @@ router.put("/update", (req, res, next) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.put("/update-profile", (req, res, next) => {
+router.put("/update-profile", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const { id, current_pass, new_pass, repeat_pass } = req.body;
   let newUser = {...req.body};
   User.findById(id)
@@ -61,14 +61,14 @@ router.put("/update-profile", (req, res, next) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.delete("/deletePlant", (req, res, next) => {
+router.delete("/deletePlant", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const { user, plant } = req.body;
   User.findByIdAndUpdate(user.id, { $pull: { plants: plant.id } })
     .then(() => res.status(200).json({ message: "User plant deleted" }))
     .catch(err => res.status(500).json(err));
 });
 
-router.post("/upload", uploader.single("picture"), (req, res) => {
+router.post("/upload", ensureLogin.ensureLoggedIn(), uploader.single("picture"), (req, res) => {
   if (req.file) {
     res.status(200).json({ secure_url: req.file.secure_url });
   } else {

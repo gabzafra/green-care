@@ -5,7 +5,7 @@ const User = require("../../models/User");
 const Task = require("../../models/Task");
 const uploader = require("../../configs/cloudinary.config");
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const { id } = req.params;
   Plant.findById(id)
     .populate("tasks")
@@ -13,7 +13,7 @@ router.get("/:id", (req, res, next) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.get("/user/:id", (req, res, next) => {
+router.get("/user/:id", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const { id } = req.params;
   User.findById(id)
     .populate("plants")
@@ -22,13 +22,13 @@ router.get("/user/:id", (req, res, next) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.post("/create", (req, res, next) => {
+router.post("/create", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   Plant.create(req.body)
     .then(newPlant => res.status(200).json(newPlant))
     .catch(err => res.status(500).json(err));
 });
 
-router.delete("/delete/:id", (req, res, next) => {
+router.delete("/delete/:id", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   const { id: plantId } = req.params;
   Plant.findById(plantId)
     .then(plant => {
@@ -39,13 +39,13 @@ router.delete("/delete/:id", (req, res, next) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.put("/update", (req, res, next) => {
+router.put("/update", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   Plant.findByIdAndUpdate(req.body.id, req.body)
     .then(newPlant => res.status(200).json(newPlant))
     .catch(err => res.status(500).json(err));
 });
 
-router.post("/upload", uploader.single("picture"), (req, res) => {
+router.post("/upload", ensureLogin.ensureLoggedIn(), uploader.single("picture"), (req, res) => {
   if (req.file) {
     res.status(200).json({ secure_url: req.file.secure_url });
   } else {
