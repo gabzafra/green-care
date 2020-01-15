@@ -45,7 +45,7 @@ class GmapsMap extends Component {
           url: location.picture,
           size: { width: 60, height: 60 },
           anchor: { x: 15, y: 30 },
-          scaledSize: { width: 30, height: 30 }
+          scaledSize: { width: 40, height: 40 }
         }}
         text={location.name}
         onClick={e =>
@@ -109,5 +109,5 @@ class GmapsMap extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyCm0meO5cjbh70YvG6BIQVh5GqRHXHG7Uw"
+  apiKey: `${process.env.REACT_APP_MAPS_API_KEY}`
 })(GmapsMap);

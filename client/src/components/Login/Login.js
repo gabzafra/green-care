@@ -32,7 +32,6 @@ export default class Login extends Component {
     .then(
       (user) => {
         user.token = apiToken;
-        console.log(user);
         setUser(user);
         history.push("/main");
       },

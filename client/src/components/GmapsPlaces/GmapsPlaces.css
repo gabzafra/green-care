@@ -8,6 +8,11 @@
   right: 0;
 }
 
+.map-wrapper img[src*="cloudinary"]{
+  border: 3px solid #6AA76F !important;
+  border-radius: 50%;
+}
+
 .map {
   width: 100vh;
   height: 100vh;

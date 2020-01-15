@@ -149,7 +149,6 @@ export default class PlantDetail extends Component {
           return Promise.resolve(plant);
         })
         .catch(error => {
-          console.log(error);
           return Promise.resolve(plant);
         });
     };
@@ -411,7 +410,6 @@ export default class PlantDetail extends Component {
                       className="map"
                       lat={this.state.lat}
                       lng={this.state.lng}
-                      picture={this.state.plant.picture}
                       handleChange={this.handleLocChange}
                     />
                     <button

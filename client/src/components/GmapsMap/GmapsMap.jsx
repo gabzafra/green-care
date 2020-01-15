@@ -9,8 +9,7 @@ import {
 
 const MyMapComponent = compose(
   withProps({
-    googleMapURL:
-      "https://maps.googleapis.com/maps/api/js?key=AIzaSyCm0meO5cjbh70YvG6BIQVh5GqRHXHG7Uw&libraries=geometry,drawing,places",
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAPS_API_KEY}&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `100vh` }} />,
     mapElement: <div style={{ height: `100%` }} />
@@ -27,7 +26,7 @@ const MyMapComponent = compose(
 
         onPositionChanged: () => {
           const position = refs.marker.getPosition();
-          this.props.handleChange({lat:position.lat(),lng:position.lng()})
+          this.props.handleChange({ lat: position.lat(), lng: position.lng() });
         }
       });
     }
@@ -37,12 +36,11 @@ const MyMapComponent = compose(
 )(props => (
   <GoogleMap defaultZoom={8} defaultCenter={{ lat: props.lat, lng: props.lng }}>
     {props.isMarkerShown && (
-      <Marker 
+      <Marker
         position={{ lat: props.lat, lng: props.lng }}
         draggable={true}
         ref={props.onMarkerMounted}
         onPositionChanged={props.onPositionChanged}
-        icon={ { url: props.picture, size: {width: 60, height: 60}, anchor: {x: 15, y: 30}, scaledSize: {width: 30, height: 30}, }}
       />
     )}
   </GoogleMap>
@@ -56,7 +54,12 @@ class MyParentComponentWrapper extends React.PureComponent {
   render() {
     return (
       <div>
-        <MyMapComponent lat={this.props.lat} lng={this.props.lng} picture={this.props.picture} handleChange={this.props.handleChange} isMarkerShown={true} />
+        <MyMapComponent
+          lat={this.props.lat}
+          lng={this.props.lng}
+          handleChange={this.props.handleChange}
+          isMarkerShown={true}
+        />
       </div>
     );
   }
