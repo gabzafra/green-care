@@ -2,3 +2,4 @@
 # Environment Variables should NEVER be published
 
 .DS_Store
+.gitignore
