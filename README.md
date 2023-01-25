@@ -70,5 +70,5 @@ It was made as my the final project at the Ironhack Web Development Bootcamp in 
 ## Acknowledgements
 
 To all my class companions, they are the more motivated and motivating people I have ever meet. Love to you people.
-To Dani Vicario our teacher becouse all the knowledge hi gave me, and for show me a better way to see the world.
+To Dani Vicario our teacher becouse all the knowledge he gave me, and for show me a better way to see the world.
 To our TAs, for being there with us long hours beyond the call of duty.
